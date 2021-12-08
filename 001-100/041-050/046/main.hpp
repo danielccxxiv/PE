@@ -5,8 +5,7 @@
 #include <iostream>
 #include <vector>
 
-#include <primesieve.hpp>
-
 #include "../../../Misc/binary_search.hpp"
+#include "../../../Misc/Sequences/prime.hpp"
 
 #endif

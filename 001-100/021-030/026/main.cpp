@@ -3,8 +3,9 @@
 
 int main(int argc, char** argv) {
     int max_cyc = 0;
-    int temp, max_base, i;
-    for(i = 2; i < limit; i++) {
+    int temp;
+    int max_base;
+    for(int i = 2; i < limit; i++) {
         if((i % 2 == 0) || (i % 5 == 0)) {
             continue;
         }

@@ -4,7 +4,7 @@
 
 #include <iostream>
 
-#include <primesieve.hpp>
+#include "../../../Misc/Sequences/prime.hpp"
 
 static const int N = 2000000;
 
