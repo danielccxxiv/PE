@@ -1,0 +1,9 @@
+toolsets = gnu;
+
+program main {
+	sources {
+		main.cpp
+		../../../../Misc/Factorize/factorize.cpp
+	}
+}
+
