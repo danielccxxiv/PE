@@ -8,7 +8,7 @@ int main(int argc, char** argv) {
     }
     std::vector<int> ab_list;
     for(int i = 2; i < N; i++) {
-        if(factor_sum<int, false>(factor<int, true>(i)) > (2 * i)) {
+        if(factor_sum<int, false>(factor<int, int, true>(i)) > (2 * i)) {
             ab_list.push_back(i);
         }
     }

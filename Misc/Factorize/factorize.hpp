@@ -36,13 +36,13 @@ template<class T> struct prime_factor_data {
 template<class T> boost::unordered_map<T, prime_factor_list<T>> prime_factor_data<T>::factor_map;
 template<class T> typename boost::unordered_map<T, prime_factor_list<T>>::iterator prime_factor_data<T>::factor_iter;
 
-template<class T, bool CACHE> prime_factor_list<T>* factor(T num);
-template<class T> prime_factor_list<T>* factor_loop_cache(T num, int prime_list_pos);
-template<class T> prime_factor_list<T>* factor_loop_no_cache(T num);
-template<class T, bool CACHE> prime_factor_list<T>* mult_factor(T num1, T num2);
+template<class T, class P, bool CACHE> prime_factor_list<T>* factor(T num);
+template<class T, class P> prime_factor_list<T>* factor_loop_cache(T num, int prime_list_pos);
+template<class T, class P> prime_factor_list<T>* factor_loop_no_cache(T num);
+template<class T, class P, bool CACHE> prime_factor_list<T>* mult_factor(T num1, T num2);
 
 // Throws exceptions for inputs less than 2
-template<class T, bool CACHE> prime_factor_list<T>* factor(T num) {
+template<class T, class P, bool CACHE> prime_factor_list<T>* factor(T num) {
     if(num < 2) {
         throw std::invalid_argument("factor: input less than 2");
     }
@@ -51,16 +51,19 @@ template<class T, bool CACHE> prime_factor_list<T>* factor(T num) {
         return &(prime_factor_data<T>::factor_iter->second);
     }
     if(CACHE) {
-        return factor_loop_cache<T>(num, 0);
+        return factor_loop_cache<T, P>(num, 0);
     } else {
-        return factor_loop_no_cache<T>(num);
+        return factor_loop_no_cache<T, P>(num);
     }
 }
 
-template<class T> prime_factor_list<T>* factor_loop_cache(T num, int prime_list_pos) {
+template<class T, class P> prime_factor_list<T>* factor_loop_cache(T num, int prime_list_pos) {
     prime_factor_list<T>* result = new prime_factor_list<T>;
     result->num = num;
-    if(binary_search<T>(prime<T>::list, num, 0, prime<T>::list.size()) >= 0) {
+    while(prime_list_pos >= prime<P>::list.size()) {
+        prime<P>::list.push_back(prime<P>::iter.next_prime());
+    }
+    if((num <= prime<P>::list[prime<P>::list.size()]) && (binary_search<P>(prime<P>::list, num, 0, prime<P>::list.size()) >= 0)) {
         result->len = 1;
         result->primes = new T[1];
         result->exp = new int[1];
@@ -71,18 +74,15 @@ template<class T> prime_factor_list<T>* factor_loop_cache(T num, int prime_list_
     }
     T val_sqrt = floor_sqrt(num) + 1;
     bool sm_fact_found = false;
-    while(prime_list_pos >= prime<T>::list.size()) {
-        prime<T>::list.push_back(prime<T>::iter.next_prime());
-    }
-    while(prime<T>::list[prime_list_pos] < val_sqrt) {
-        if(num % prime<T>::list[prime_list_pos] == 0) {
-            num /= prime<T>::list[prime_list_pos];
+    while(prime<P>::list[prime_list_pos] < val_sqrt) {
+        if(num % prime<P>::list[prime_list_pos] == 0) {
+            num /= prime<P>::list[prime_list_pos];
             sm_fact_found = true;
             break;
         }
         prime_list_pos++;
-        while(prime_list_pos >= prime<T>::list.size()) {
-            prime<T>::list.push_back(prime<T>::iter.next_prime());
+        while(prime_list_pos >= prime<P>::list.size()) {
+            prime<P>::list.push_back(prime<P>::iter.next_prime());
         }
     }
     if(!(sm_fact_found)) {
@@ -95,15 +95,15 @@ template<class T> prime_factor_list<T>* factor_loop_cache(T num, int prime_list_
         return result;
     }
     int sm_exp = 1;
-    while(num % prime<T>::list[prime_list_pos] == 0) {
-        num /= prime<T>::list[prime_list_pos];
+    while(num % prime<P>::list[prime_list_pos] == 0) {
+        num /= prime<P>::list[prime_list_pos];
         sm_exp++;
     }
     if(num == 1) {
         result->len = 1;
         result->primes = new T[1];
         result->exp = new int[1];
-        result->primes[0] = prime<T>::list[prime_list_pos];
+        result->primes[0] = prime<P>::list[prime_list_pos];
         result->exp[0] = sm_exp;
         prime_factor_data<T>::factor_map.emplace(result->num, *result);
         return result;
@@ -111,14 +111,14 @@ template<class T> prime_factor_list<T>* factor_loop_cache(T num, int prime_list_
     prime_factor_list<T>* num_div_list;
     prime_factor_data<T>::factor_iter = prime_factor_data<T>::factor_map.find(num);
     if(prime_factor_data<T>::factor_iter == prime_factor_data<T>::factor_map.end()) {
-        num_div_list = factor_loop_cache<T>(num, prime_list_pos + 1);
+        num_div_list = factor_loop_cache<T, P>(num, prime_list_pos + 1);
     } else {
         num_div_list = &(prime_factor_data<T>::factor_iter->second);
     }
     result->len = num_div_list->len + 1;
     result->primes = new T[result->len];
     result->exp = new int[result->len];
-    result->primes[0] = prime<T>::list[prime_list_pos];
+    result->primes[0] = prime<P>::list[prime_list_pos];
     result->exp[0] = sm_exp;
     for(int i = 1; i < (result->len); i++) {
         result->primes[i] = num_div_list->primes[i - 1];
@@ -128,10 +128,14 @@ template<class T> prime_factor_list<T>* factor_loop_cache(T num, int prime_list_
     return result;
 }
 
-template<class T> prime_factor_list<T>* factor_loop_no_cache(T num) {
+template<class T, class P> prime_factor_list<T>* factor_loop_no_cache(T num) {
     prime_factor_list<T>* result = new prime_factor_list<T>;
     result->num = num;
-    if(binary_search<T>(prime<T>::list, num, 0, prime<T>::list.size()) >= 0) {
+    int prime_list_pos = 0;
+    while(prime_list_pos >= prime<P>::list.size()) {
+        prime<P>::list.push_back(prime<P>::iter.next_prime());
+    }
+    if((num <= prime<P>::list[prime<P>::list.size()]) && (binary_search<P>(prime<P>::list, num, 0, prime<P>::list.size()) >= 0)) {
         result->len = 1;
         result->primes = new T[1];
         result->exp = new int[1];
@@ -141,27 +145,23 @@ template<class T> prime_factor_list<T>* factor_loop_no_cache(T num) {
     }
     std::stack<T> prime_stack;
     std::stack<int> exp_stack;
-    int prime_list_pos = 0;
     T val_sqrt = floor_sqrt(num) + 1;
     int temp_exp;
-    while(prime_list_pos >= prime<T>::list.size()) {
-        prime<T>::list.push_back(prime<T>::iter.next_prime());
-    }
-    while(prime<T>::list[prime_list_pos] < val_sqrt) {
-        if(num % prime<T>::list[prime_list_pos] == 0) {
-            num /= prime<T>::list[prime_list_pos];
+    while(prime<P>::list[prime_list_pos] < val_sqrt) {
+        if(num % prime<P>::list[prime_list_pos] == 0) {
+            num /= prime<P>::list[prime_list_pos];
             temp_exp = 1;
-            while(num % prime<T>::list[prime_list_pos] == 0) {
-                num /= prime<T>::list[prime_list_pos];
+            while(num % prime<P>::list[prime_list_pos] == 0) {
+                num /= prime<P>::list[prime_list_pos];
                 temp_exp++;
             }
-            prime_stack.push(prime<T>::list[prime_list_pos]);
+            prime_stack.push(prime<P>::list[prime_list_pos]);
             exp_stack.push(temp_exp);
             val_sqrt = floor_sqrt(num) + 1;
         }
         prime_list_pos++;
-        while(prime_list_pos >= prime<T>::list.size()) {
-            prime<T>::list.push_back(prime<T>::iter.next_prime());
+        while(prime_list_pos >= prime<P>::list.size()) {
+            prime<P>::list.push_back(prime<P>::iter.next_prime());
         }
     }
     if(num != 1) {
@@ -180,16 +180,16 @@ template<class T> prime_factor_list<T>* factor_loop_no_cache(T num) {
     return result;
 }
 
-template<class T, bool CACHE> prime_factor_list<T>* mult_factor(T num1, T num2) {
+template<class T, class P, bool CACHE> prime_factor_list<T>* mult_factor(T num1, T num2) {
     prime_factor_data<T>::factor_iter = prime_factor_data<T>::factor_map.find(num1 * num2);
     if(prime_factor_data<T>::factor_iter != prime_factor_data<T>::factor_map.end()) {
         return prime_factor_data<T>::factor_iter->second;
     }
     if((num1 == 1) || (num2 == 1)) {
-        return factor<T, CACHE>(num1 * num2);
+        return factor<T, P, CACHE>(num1 * num2);
     }
-    prime_factor_list<T>* f1 = factor<T, CACHE>(num1);
-    prime_factor_list<T>* f2 = factor<T, CACHE>(num2);
+    prime_factor_list<T>* f1 = factor<T, P, CACHE>(num1);
+    prime_factor_list<T>* f2 = factor<T, P, CACHE>(num2);
     prime_factor_list<T>* result = new prime_factor_list<T>();
     result->num = num1 * num2;
     int s1 = f1->len;

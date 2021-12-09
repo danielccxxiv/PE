@@ -2,8 +2,9 @@
 #ifndef MILLER_RABIN_HPP
 #define MILLER_RABIN_HPP
 
+#include <boost/multiprecision/cpp_int.hpp>
+
 #include "pow_functions.hpp"
-#include "prime_gen.hpp"
 
 static int* mr_default_arr;
 static int mr_default_arr_len;
@@ -12,13 +13,9 @@ static int mr_arr_len_1 = 3;
 static int mr_arr_2[] = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41};
 static int mr_arr_len_2 = 13;
 
-typedef struct miller_rabin_INIT {
-	miller_rabin_INIT() {
-		mr_default_arr = prime_gen(62973, &mr_default_arr_len);
-	}
-} miller_rabin_INIT;
+template<class T> struct mr_det_data {
 
-static miller_rabin_INIT mr_INIT;
+};
 
 template<class T> bool miller_rabin(T num) {
 	if((num == 1) || (num % 2 == 0)) {

@@ -14,7 +14,7 @@ typedef struct pfact {
     int len;
 
     pfact(int n) {
-        prime_factor_list<int>* x = factor<int, true>(n);
+        prime_factor_list<int>* x = factor<int, int, true>(n);
         this->len = x->primes[x->len - 1] + 1;
         this->arr = new int[this->len];
         for(int i = 0; i < this->len; i++) {

@@ -9,7 +9,7 @@ int main(int argc, char** argv) {
         if((i % 2 == 0) || (i % 5 == 0)) {
             continue;
         }
-        temp = mult_group_size<int, true>(i, 10, factor<int, true>(totient<int, true>(factor<int, true>(i))));
+        temp = mult_group_size<int, true>(i, 10, factor<int, int, true>(totient<int, true>(factor<int, int, true>(i))));
         if(temp > max_cyc) {
             max_cyc = temp;
             max_base = i;

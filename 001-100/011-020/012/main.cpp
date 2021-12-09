@@ -14,7 +14,7 @@ int main(int argc, char** argv) {
 		} else {
 			b /= 2;
 		}
-        num_facts = factor_count<int, true>(factor<int, true>(a)) * factor_count<int, true>(factor<int, true>(b));
+        num_facts = factor_count<int, true>(factor<int, int, true>(a)) * factor_count<int, true>(factor<int, int, true>(b));
 		n++;
 	}
 	std::cout << a * b << std::endl;
