@@ -2,10 +2,16 @@
 #ifndef MAIN_HPP
 #define	MAIN_HPP
 
+#include <cstdint>
 #include <iostream>
+
+typedef std::int32_t int32_t;
+typedef std::uint32_t uint32_t;
+typedef std::int64_t int64_t;
+typedef std::uint64_t uint64_t;
 
 #include <primesieve.hpp>
 
-static const int N = 10001;
+static const uint32_t N = 10001;
 
 #endif
