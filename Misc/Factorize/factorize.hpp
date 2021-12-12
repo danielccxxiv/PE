@@ -18,7 +18,7 @@ typedef std::size_t size_t;
 
 #include "../binary_search.hpp"
 #include "../floor_sqrt.hpp"
-#include "../Sequences/prime.hpp"
+#include "../Sequences/prime_sequence.hpp"
 
 template<class T> struct prime_factor_list {
 	T num;

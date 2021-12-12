@@ -3,15 +3,22 @@
 #define PERMUTATION_HPP
 
 #include <cstddef>
+#include <cstdint>
 
-template<class T> void perm_iter_inc(T* arr, std::size_t len) {
-	std::size_t pos = len - 1;
+typedef std::int32_t int32_t;
+typedef std::uint32_t uint32_t;
+typedef std::int64_t int64_t;
+typedef std::uint64_t uint64_t;
+typedef std::size_t size_t;
+
+template<class T> void perm_iter_inc(T* arr, size_t len) {
+	size_t pos = len - 1;
     while((pos > 0) && (arr[pos - 1] >= arr[pos])) {
         pos--;
     }
     T temp;
     if(pos == 0) {
-        for(std::size_t i = 0; i < (len / 2); i++) {
+        for(size_t i = 0; i < (len / 2); i++) {
             temp = arr[i];
             arr[i] = arr[len - i - 1];
             arr[len - i - 1] = temp;
@@ -19,14 +26,14 @@ template<class T> void perm_iter_inc(T* arr, std::size_t len) {
         return;
     }
     pos--;
-    std::size_t pivot = len - 1;
+    size_t pivot = len - 1;
     while(arr[pivot] <= arr[pos]) {
         pivot--;
     }
     temp = arr[pos];
     arr[pos] = arr[pivot];
     arr[pivot] = temp;
-    for(std::size_t i = pos + 1; i < ((pos + len + 1) / 2); i++) {
+    for(size_t i = pos + 1; i < ((pos + len + 1) / 2); i++) {
         temp = arr[i];
         arr[i] = arr[len + pos - i];
         arr[len + pos - i] = temp;
@@ -34,14 +41,14 @@ template<class T> void perm_iter_inc(T* arr, std::size_t len) {
     return;
 }
 
-template<class T> void perm_iter_dec(T* arr, int32_t len) {
-	std::size_t pos = len - 1;
+template<class T> void perm_iter_dec(T* arr, size_t len) {
+	size_t pos = len - 1;
     while((pos > 0) && (arr[pos - 1] <= arr[pos])) {
         pos--;
     }
     T temp;
     if(pos == 0) {
-        for(std::size_t i = 0; i < (len / 2); i++) {
+        for(size_t i = 0; i < (len / 2); i++) {
             temp = arr[i];
             arr[i] = arr[len - i - 1];
             arr[len - i - 1] = temp;
@@ -49,14 +56,14 @@ template<class T> void perm_iter_dec(T* arr, int32_t len) {
         return;
     }
     pos--;
-    std::size_t pivot = len - 1;
+    size_t pivot = len - 1;
     while(arr[pivot] >= arr[pos]) {
         pivot--;
     }
     temp = arr[pos];
     arr[pos] = arr[pivot];
     arr[pivot] = temp;
-    for(std::size_t i = pos + 1; i < ((pos + len + 1) / 2); i++) {
+    for(size_t i = pos + 1; i < ((pos + len + 1) / 2); i++) {
         temp = arr[i];
         arr[i] = arr[len + pos - i];
         arr[len + pos - i] = temp;

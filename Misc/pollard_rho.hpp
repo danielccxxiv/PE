@@ -2,12 +2,20 @@
 #ifndef POLLARD_RHO_HPP
 #define POLLARD_RHO_HPP
 
+#include <cstddef>
+#include <cstdint>
+
+typedef std::int32_t int32_t;
+typedef std::uint32_t uint32_t;
+typedef std::int64_t int64_t;
+typedef std::uint64_t uint64_t;
+typedef std::size_t size_t;
+
 #include "gcd.hpp"
 
 // Returns 0 if no factor found
-// well defined for all inputs greater than 1
 template<class T> T pollard_rho(T num) {
-    if(num < 2) {
+    if(num < 4) {
         return 0;
     }
     T x = 2;

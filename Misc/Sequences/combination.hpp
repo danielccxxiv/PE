@@ -2,14 +2,15 @@
 #ifndef COMBINATION_HPP
 #define COMBINATION_HPP
 
+#include <cstddef>
 #include <cstdint>
 
 typedef std::int32_t int32_t;
 typedef std::uint32_t uint32_t;
 typedef std::int64_t int64_t;
 typedef std::uint64_t uint64_t;
+typedef std::size_t size_t;
 
-#include <cstddef>
 #include <vector>
 
 template<class T> struct combination_data {
@@ -20,7 +21,7 @@ template<class T> std::vector<T*> combination_data<T>::combination_vector {new T
 
 // Uses recursive definition of combination
 // Returns 0 for invalid inputs
-template<class T> T combination(std::size_t n, std::size_t k) {
+template<class T> T combination(size_t n, size_t k) {
     if(k > n) {
         return 0;
     }
@@ -46,9 +47,9 @@ template<class T> T combination(std::size_t n, std::size_t k) {
     } else {
         val = combination<T>(n - 1, 0);
     }
-    uint32_t n_len = (n / 2) + 1;
+    size_t n_len = (n / 2) + 1;
     T* n_list = new T[n_len];
-    for(uint32_t i = 0; i < n_len; i++) {
+    for(size_t i = 0; i < n_len; i++) {
         n_list[i] = 0;
     }
     n_list[k] = val;
