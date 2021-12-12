@@ -1,12 +1,12 @@
 
 #include "main.hpp"
 
-int main(int argc, char** argv) {
-    long sum = 0;
-    int val = prime<int>::iter.next_prime();
+int main() {
+    uint64_t sum = 0;
+    uint32_t val = prime<uint32_t>::iter.next_prime();
     while(val < N) {
         sum += val;
-        val = prime<int>::iter.next_prime();
+        val = prime<uint32_t>::iter.next_prime();
     }
     std::cout << sum << std::endl;
 	return 0;

@@ -1,32 +1,31 @@
 
 #include "main.hpp"
 
-int main(int argc, char** argv) {
-    int* arr = new int[N];
-    int i;
-    for(i = 0; i < N; i++) {
+int main() {
+    uint32_t* arr = new uint32_t[N];
+    for(uint32_t i = 0; i < N; i++) {
         arr[i] = i;
     }
     lex_reorder(arr, N, val);
     std::string result;
-    for(i = 0; i < N; i++) {
+    for(uint32_t i = 0; i < N; i++) {
         result += std::to_string(arr[i]);
     }
     std::cout << result << std::endl;
     return 0;
 }
 
-int lex_reorder(int* arr, int len, long val) {
+void lex_reorder(uint32_t* arr, uint32_t len, uint64_t val) {
     if(len < 2) {
         return 0;
     }
-    int q = val / factorial<int>(len - 1);
-    val = val - q * factorial<int>(len - 1);
-    int el = arr[q];
-    for(int i = q - 1; i > -1; i--) {
+    uint32_t q = val / factorial<uint64_t>(len - 1);
+    val = val - q * factorial<uint64_t>(len - 1);
+    uint32_t el = arr[q];
+    for(uint32_t i = q - 1; i >= 0; i--) {
         arr[i + 1] = arr[i];
     }
     arr[0] = el;
     lex_reorder(arr + 1, len - 1, val);
-    return 0;
+    return;
 }

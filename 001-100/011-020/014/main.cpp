@@ -1,15 +1,15 @@
 
 #include "main.hpp"
 
-int main(int argc, char** argv) {
-    int steps;
-    int max = 0;
-    int ans = 1;
-    for(int i = 0; i < limit; i++) {
+int main() {
+    uint32_t steps;
+    uint32_t max = 0;
+    uint32_t ans = 1;
+    for(uint32_t i = 0; i < limit; i++) {
         data[i] = -1;
     }
     data[1] = 0;
-    for(int i = 2; i < limit; i++) {
+    for(uint32_t i = 2; i < limit; i++) {
         steps = collatz(i);
         if(steps >= max) {
             max = steps;
@@ -20,14 +20,14 @@ int main(int argc, char** argv) {
     return 0;
 }
 
-int collatz(int n) {
+int32_t collatz(uint32_t n) {
     if(n < limit) {
         if(data[n] != -1) {
             return data[n];
         }
     }
-    int count = 1;
-    long next;
+    int32_t count = 1;
+    uint64_t next;
     if(n % 2 == 0) {
         next = n / 2;
     } else {
@@ -41,7 +41,7 @@ int collatz(int n) {
         }
         count++;
     }
-    int val = collatz(next) + count;
+    int32_t val = collatz(next) + count;
     if(n < limit) {
         data[n] = val;
     }

@@ -1,14 +1,9 @@
 
-#ifndef ROUND_SQRT_HPP
-#define ROUND_SQRT_HPP
+#ifndef FLOOR_SQRT_HPP
+#define FLOOR_SQRT_HPP
 
-#include <stdexcept>
-
-// Throws exception for negative inputs
+// Well defined only for non-negative inputs
 template<class T> T floor_sqrt(T num) {
-	if(num < 0) {
-        throw std::invalid_argument("floor_sqrt: negative input");
-    }
     if(num == 0) {
         return 0;
     }

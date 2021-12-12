@@ -2,34 +2,23 @@
 #ifndef DIGIT_SUM_HPP
 #define DIGIT_SUM_HPP
 
+#include <cstddef>
+#include <cstdint>
+
+typedef std::int32_t int32_t;
+typedef std::uint32_t uint32_t;
+typedef std::int64_t int64_t;
+typedef std::uint64_t uint64_t;
+typedef std::size_t size_t;
+
 #include <stdexcept>
 
-// Returns positive digit sum for negative values
-template<class T> int digit_sum(T val) {
-	int sum = 0;
-	if(val < 0) {
-		val = -val;
-	}
-	while(val > 0) {
-        sum += ((int) (val % 10));
-		val /= 10;
-	}
-	return sum;
-}
-
-// Returns positive digit sum for negative values
-// Throws exception for invalid values of base (less than 2)
-template<class T> int digit_sum_base(T val, int base) {
-    if(base < 2) {
-        throw std::invalid_argument("digit_sum_base: Invalid input for base (less than 2)");
-    }
-	int sum = 0;
-	if(val < 0) {
-		val = -val;
-	}
-	while(val > 0) {
-        sum += ((int) (val % base));
-		val /= base;
+// Well defined only for non-negtive num and base > 1
+template<class T, class B> int32_t digit_sum(T num, B base = 10) {
+    int32_t sum = 0;
+	while(num > 0) {
+        sum += (num % base);
+		num /= base;
 	}
 	return sum;
 }

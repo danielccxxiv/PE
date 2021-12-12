@@ -2,10 +2,11 @@
 #ifndef POLLARD_RHO_HPP
 #define POLLARD_RHO_HPP
 
+#include "gcd.hpp"
+
+// Returns 0 if no factor found
+// well defined for all inputs greater than 1
 template<class T> T pollard_rho(T num) {
-    if(num < 0) {
-        num = -num;
-    }
     if(num < 2) {
         return 0;
     }

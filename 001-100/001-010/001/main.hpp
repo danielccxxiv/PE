@@ -10,6 +10,6 @@ typedef std::uint32_t uint32_t;
 typedef std::int64_t int64_t;
 typedef std::uint64_t uint64_t;
 
-static const uint32_t limit = 1000;
+static const int32_t limit = 1000;
 
 #endif

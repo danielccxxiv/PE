@@ -12,6 +12,6 @@ typedef std::uint64_t uint64_t;
 
 #include "../../../Misc/Sequences/fibonacci.hpp"
 
-static const uint32_t limit = 4000000;
+static const int32_t limit = 4000000;
 
 #endif

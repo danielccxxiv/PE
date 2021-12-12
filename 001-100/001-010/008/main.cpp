@@ -1,30 +1,28 @@
 
 #include "main.hpp"
 
-int main(int argc, char** argv) {
-	int* digits;
+int main() {
+	uint32_t* digits;
 	read_file("data.txt", &digits);
-    int i;
-	long max_product = 0;
-	for(i = 0; i < (num_len - prod_len + 1); i++) {
+	uint64_t max_product = 0;
+	for(uint32_t i = 0; i < (num_len - prod_len + 1); i++) {
 		max_product = std::max(product(digits, i), max_product);
 	}
 	std::cout << max_product << std::endl;
 	return 0;
 }
 
-int read_file(std::string filename, int** param) {
-    int i;
-    int cnt = 0;
-    int* data = new int[num_len];
+void read_file(std::string filename, uint32_t** param) {
+    uint32_t cnt = 0;
+    uint32_t* data = new uint32_t[num_len];
     std::string raw_data;
     boost::filesystem::ifstream stream;
     stream.open(filename);
     getline(stream, raw_data);
-    int l_len = raw_data.length();
+    uint32_t l_len = raw_data.length();
     while(l_len > 0) {
-        for(i = 0; i < l_len; i++) {
-            data[cnt] = ((int) raw_data[i]) - 48;
+        for(uint32_t i = 0; i < l_len; i++) {
+            data[cnt] = ((uint32_t) raw_data[i]) - 48;
             cnt++;
         }
         getline(stream, raw_data);
@@ -32,12 +30,12 @@ int read_file(std::string filename, int** param) {
     }
     stream.close();
     *param = data;
-    return 0;
+    return;
 }
 
-long product(int* digits, int start) {
-	long prod = 1;
-	for(int i = start; i < (start + prod_len); i++) {
+uint64_t product(uint32_t* digits, uint32_t start) {
+	uint64_t prod = 1;
+	for(uint32_t i = start; i < (start + prod_len); i++) {
 		prod *= digits[i];
 	}
 	return prod;

@@ -2,6 +2,15 @@
 #ifndef FACTOR_COUNT_HPP
 #define FACTOR_COUNT_HPP
 
+#include <cstddef>
+#include <cstdint>
+
+typedef std::int32_t int32_t;
+typedef std::uint32_t uint32_t;
+typedef std::int64_t int64_t;
+typedef std::uint64_t uint64_t;
+typedef std::size_t size_t;
+
 #include <boost/unordered_map.hpp>
 
 #include "factorize.hpp"
@@ -20,7 +29,7 @@ template<class T, bool CACHE> T factor_count(prime_factor_list<T>* x) {
         return factor_count_data<T>::factor_count_iter->second;
     }
 	T product = 1;
-	for(int i = 0; i < x->len; i++) {
+	for(size_t i = 0; i < x->len; i++) {
 		product *= (x->exp[i] + 1);
 	}
     if(CACHE) {

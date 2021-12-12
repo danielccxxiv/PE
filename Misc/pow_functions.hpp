@@ -4,134 +4,161 @@
 
 #include <stdexcept>
 
-static bool pow_mod_safety = false;
-
-// Throws exception for negative exponents
-template<class T, class E> T pow(T base, E exponent) {
-    if(exponent < 0) {
-        throw std::invalid_argument("pow: negative exponent");
-    }
-	if(exponent == 0) {
-		return (T) 1;
-	}
+// Expected sanitization of inputs:
+// both integer types, non-negative exponent
+template<class T, class E> T pow_int(T base, E exponent) {
     T result = 1;
     while(exponent != 0) {
-        if(exponent % 2 == 0) {
-            base *= base;
-            exponent /= 2;
-        } else {
+        if(exponent & 1) {
             result *= base;
             exponent -= 1;
+        } else {
+            base *= base;
+            exponent >>= 1;
         }
     }
 	return result;
 }
 
-// Throws exception for negative exponents and mod less than 2
-template<class T, class E> T pow_mod(T base, E exponent, T mod, bool safety = false) {
-    if(mod < 2) {
-        throw std::invalid_argument("pow_mod: mod less than 2");
-    }
-    if(exponent < 0) {
-        throw std::invalid_argument("pow_mod: negative exponent");
-    }
-    if(exponent == 0) {
-		return (T) 1;
-	}
+// Template with no safety (possible overflows)
+// Expected sanitization of inputs:
+// both integer types, non-negative exponent, mod greater than 1
+template<class T, class E> T pow_int_mod(T base, E exponent, T mod) {
     if(base < 0) {
         base = (mod - ((-base) % mod)) % mod;
-    } else {
+    } else if(base >= mod) {
         base = base % mod;
     }
     T result = 1;
-    if(safety) {
-        T prod;
-        T arg0;
-        T arg1;
-        while(exponent != 0) {
-            prod = 0;
-            arg0 = base;
-            if(exponent % 2 == 0) {
-                arg1 = base;
-                while(arg0 != 0) {
-                    if(arg0 % 2 == 0) {
-                        arg1 = (arg1 + arg1) % mod;
-                        arg0 /= 2;
-                    } else {
-                        prod = (prod + arg1) % mod;
-                        arg0 -= 1;
-                    }
-                }
-                base = prod;
-                exponent /= 2;
-            } else {
-                arg1 = result;
-                while(arg0 != 0) {
-                    if(arg0 % 2 == 0) {
-                        arg1 = (arg1 + arg1) % mod;
-                        arg0 /= 2;
-                    } else {
-                        prod = (prod + arg1) % mod;
-                        arg0 -= 1;
-                    }
-                }
-                result = prod;
-                exponent -= 1;
-            }
-        }
-    } else {
-        while(exponent != 0) {
-            if(exponent % 2 == 0) {
-                base = (base * base) % mod;
-                exponent /= 2;
-            } else {
-                result = (result * base) % mod;
-                exponent -= 1;
-            }
+    while(exponent != 0) {
+        if(exponent & 1) {
+            result = (result * base) % mod;
+            exponent -= 1;
+        } else {
+            base = (base * base) % mod;
+            exponent >>= 1;
         }
     }
-	return result;
+    return result;
 }
 
-template<class T> T mult_mod(T a, T b, T mod) {
-    if(mod < 2) {
-        throw std::invalid_argument("mult_mod: mod less than 2");
+// Template with some safety (overflow handling)
+// Expected sanitization of inputs:
+// both integer types, non-negative exponent, mod greater than 1
+template<class T, class E> T pow_int_mod_ofl_check(T base, E exponent, T mod) {
+    if(base < 0) {
+        base = (mod - ((-base) % mod)) % mod;
+    } else if(base >= mod) {
+        base = base % mod;
     }
+    T result = 1;
+    T prod;
+    T arg0;
+    T arg1;
+    T temp;
+    while(exponent != 0) {
+        prod = 0;
+        arg0 = base;
+        if(exponent & 1) {
+            arg1 = result;
+            while(arg0 != 0) {
+                temp = mod - arg1;
+                if(arg0 & 1) {
+                    if(prod < temp) {
+                        prod += arg1;
+                    } else {
+                        prod -= temp;
+                    }
+                    arg0 -= 1;
+                } else {
+                    if(arg1 < temp) {
+                        arg1 += arg1;
+                    } else {
+                        arg1 -= temp;
+                    }
+                    arg0 >>= 1;
+                }
+            }
+            result = prod;
+            exponent -= 1;
+        } else {
+            arg1 = base;
+            while(arg0 != 0) {
+                temp = mod - arg1;
+                if(arg0 & 1) {
+                    if(prod < temp) {
+                        prod += arg1;
+                    } else {
+                        prod -= temp;
+                    }
+                    arg0 -= 1;
+                } else {
+                    if(arg1 < temp) {
+                        arg1 += arg1;
+                    } else {
+                        arg1 -= temp;
+                    }
+                    arg0 >>= 1;
+                }
+            }
+            base = prod;
+            exponent >>= 1;
+        }
+    }
+    return result;
+}
+
+// Expected sanitization of inputs:
+// integer type, mod greater than 1
+template<class T> T mult_int_mod(T a, T b, T mod) {
     if(a < 0) {
         a = (mod - ((-a) % mod)) % mod;
-    } else {
+    } else if(a >= mod) {
         a = a % mod;
-    }
-    if(a == 0) {
-        return 0;
     }
     if(b < 0) {
         b = (mod - ((-b) % mod)) % mod;
-    } else {
+    } else if(b >= mod){
         b = b % mod;
     }
-	if(b == 0) {
-        return 0;
-    }
     T result = 0;
+    T temp;
     if(b > a) {
         while(a != 0) {
-            if(a % 2 == 0) {
-                b = (b + b) % mod;
-                a /= 2;
-            } else {
-                result = (result + b) % mod;
+            temp = mod - b;
+            if(a & 1) {
+                if(result < temp) {
+                    result += b;
+                } else {
+                    result -= temp;
+                }
                 a -= 1;
+            } else {
+                if(b < temp) {
+                    b += b;
+                } else {
+                    b -= temp;
+                }
+                a >>= 1;
             }
         }
     } else {
         while(b != 0) {
-            if(b % 2 == 0) {
-                a = (a + a) % mod;
-                b /= 2;
-            } else {
-                result = (result + a) % mod;
+            temp = mod - a;
+            if(b & 1) {
+                if(result < temp) {
+                    result += a;
+                } else {
+                    result -= temp;
+                }
                 b -= 1;
+            } else {
+                if(a < temp) {
+                    a += a;
+                } else {
+                    a -= temp;
+                }
+                b >>= 1;
             }
         }
     }

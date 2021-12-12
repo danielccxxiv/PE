@@ -2,62 +2,66 @@
 #ifndef PERMUTATION_HPP
 #define PERMUTATION_HPP
 
-template<class T> int perm_iter_inc(T* arr, int len) {
-	int pos = len - 2;
-    T temp;
-    while((pos > -1) && (arr[pos] >= arr[pos + 1])) {
+#include <cstddef>
+
+template<class T> void perm_iter_inc(T* arr, std::size_t len) {
+	std::size_t pos = len - 1;
+    while((pos > 0) && (arr[pos - 1] >= arr[pos])) {
         pos--;
     }
-    if(pos == -1) {
-        for(int i = 0; i < (len / 2); i++) {
+    T temp;
+    if(pos == 0) {
+        for(std::size_t i = 0; i < (len / 2); i++) {
             temp = arr[i];
             arr[i] = arr[len - i - 1];
             arr[len - i - 1] = temp;
         }
-        return 0;
+        return;
     }
-    int pivot = len - 1;
+    pos--;
+    std::size_t pivot = len - 1;
     while(arr[pivot] <= arr[pos]) {
         pivot--;
     }
     temp = arr[pos];
     arr[pos] = arr[pivot];
     arr[pivot] = temp;
-    for(int i = pos + 1; i < ((pos + len + 1) / 2); i++) {
+    for(std::size_t i = pos + 1; i < ((pos + len + 1) / 2); i++) {
         temp = arr[i];
         arr[i] = arr[len + pos - i];
         arr[len + pos - i] = temp;
     }
-    return 0;
+    return;
 }
 
-template<class T> int perm_iter_dec(T* arr, int len) {
-	int pos = len - 2;
-    T temp;
-    while((pos > -1) && (arr[pos] <= arr[pos + 1])) {
+template<class T> void perm_iter_dec(T* arr, int32_t len) {
+	std::size_t pos = len - 1;
+    while((pos > 0) && (arr[pos - 1] <= arr[pos])) {
         pos--;
     }
-    if(pos == -1) {
-        for(int i = 0; i < (len / 2); i++) {
+    T temp;
+    if(pos == 0) {
+        for(std::size_t i = 0; i < (len / 2); i++) {
             temp = arr[i];
             arr[i] = arr[len - i - 1];
             arr[len - i - 1] = temp;
         }
-        return 0;
+        return;
     }
-    int pivot = len - 1;
+    pos--;
+    std::size_t pivot = len - 1;
     while(arr[pivot] >= arr[pos]) {
         pivot--;
     }
     temp = arr[pos];
     arr[pos] = arr[pivot];
     arr[pivot] = temp;
-    for(int i = pos + 1; i < ((pos + len + 1) / 2); i++) {
+    for(std::size_t i = pos + 1; i < ((pos + len + 1) / 2); i++) {
         temp = arr[i];
         arr[i] = arr[len + pos - i];
         arr[len + pos - i] = temp;
     }
-    return 0;
+    return;
 }
 
 #endif

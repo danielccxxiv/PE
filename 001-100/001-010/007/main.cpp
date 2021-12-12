@@ -1,7 +1,7 @@
 
 #include "main.hpp"
 
-int main(int argc, char** argv) {
+int main() {
     std::cout << primesieve::nth_prime(N) << std::endl;
 	return 0;
 }

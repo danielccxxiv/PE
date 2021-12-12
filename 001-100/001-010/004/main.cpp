@@ -1,7 +1,7 @@
 
 #include "main.hpp"
 
-int main(int argc, char** argv) {
+int main() {
 	uint32_t current_pal = 0;
     uint32_t product = 0;
 	for(uint32_t i = 999; i > 99; i--) {

@@ -1,7 +1,7 @@
 
 #include "main.hpp"
 
-int main(int argc, char** argv) {
-	std::cout << combination<long>(2 * limit, limit) << std::endl;
+int main() {
+	std::cout << combination<uint64_t>(limit + limit, limit) << std::endl;
 	return 0;
 }

@@ -2,14 +2,22 @@
 #ifndef PALINDROME_HPP
 #define PALINDROME_HPP
 
-#include <stdexcept>
-#include <vector>
+#include <cstddef>
+#include <cstdint>
 
-template<class T> bool is_palindrome(const T* arr, const int len) {
-    if(len < 1) {
-        throw std::invalid_argument("is_palindrome: len less than 1");
+typedef std::int32_t int32_t;
+typedef std::uint32_t uint32_t;
+typedef std::int64_t int64_t;
+typedef std::uint64_t uint64_t;
+typedef std::size_t size_t;
+
+#include <list>
+
+template<class T> bool is_palindrome(const T* arr, size_t len) {
+    if(len == 0) {
+        return true;
     }
-	for(int i = 0; i < (len / 2); i++) {
+	for(size_t i = 0; i < (len / 2); i++) {
         if(arr[i] != arr[len - i - 1]) {
             return false;
         }
@@ -17,74 +25,26 @@ template<class T> bool is_palindrome(const T* arr, const int len) {
 	return true;
 }
 
-template<class T> bool is_palindrome_num(T num) {
-    if(num < 0) {
-        num = -num;
-    }
-    if(num == 0) {
-        return true;
-    }
-    std::vector<int> digits;
-    while(num != 0) {
-        digits.push_back(num % 10);
-        num /= 10;
-    }
-    int len = digits.size();
-    int lim = digits.size() / 2;
-    for(int i = 0; i < lim; i++) {
-        if(digits[i] != digits[len - i - 1]) {
-            return false;
-        }
-    }
-    return true;
-}
-
-template<class T0, class T1> bool is_palindrome_num(T0 num, T1 base) {
-    if(base < 2) {
-        throw std::invalid_argument("is_palindrome_num: base less than 2");
-    }
-    if(num < 0) {
-        num = -num;
-    }
-    if(num == 0) {
-        return true;
-    }
-    std::vector<T1> digits;
+// Well defined only for non-negative num and base > 1
+template<class T, class B> bool is_palindrome_num(T num, B base = 10) {
+    std::list<B> digits;
     while(num != 0) {
         digits.push_back(num % base);
         num /= base;
     }
-    int len = digits.size();
-    int lim = digits.size() / 2;
-    for(int i = 0; i < lim; i++) {
-        if(digits[i] != digits[len - i - 1]) {
+    while(digits.size() > 1) {
+        if(digits.front() != digits.back()) {
             return false;
         }
+        digits.pop_front();
+        digits.pop_back();
     }
     return true;
 }
 
-template<class T> T reverse_digits(T num) {
-    if(num < 0) {
-        num = -num;
-    }
+// Well defined only for non-negative num and base > 1
+template<class T, class B> T reverse_digits(T num, B base = 10) {
     T reverse = 0;
-    while(num != 0) {
-        reverse *= 10;
-        reverse += (num % 10);
-        num /= 10;
-    }
-    return reverse;
-}
-
-template<class T0, class T1> T0 reverse_digits(T0 num, T1 base) {
-    if(base < 2) {
-        throw std::invalid_argument("reverse_digits: base less than 2");
-    }
-    if(num < 0) {
-        num = -num;
-    }
-    T0 reverse = 0;
     while(num != 0) {
         reverse *= base;
         reverse += (num % base);

@@ -1,22 +1,22 @@
 
 #include "main.hpp"
 
-int main(int argc, char** argv) {
+int main() {
     boost::container::set<std::string> data;
     read_file("names.txt", &data);
-    int pos = 0;
-    int sum = 0;
+    uint32_t pos = 0;
+    uint32_t sum = 0;
     for(std::string t: data) {
         pos++;
         for(char c: t) {
-            sum += (((int) c - 64) * pos);
+            sum += (((uint32_t) c - 64) * pos);
         }
     }
     std::cout << sum << std::endl;
     return 0;
 }
 
-int read_file(std::string filename, boost::container::set<std::string>* param) {
+void read_file(std::string filename, boost::container::set<std::string>* param) {
     boost::filesystem::ifstream stream;
     stream.open(filename);
     std::string raw_data;
@@ -26,5 +26,5 @@ int read_file(std::string filename, boost::container::set<std::string>* param) {
         (*param).insert(t);
     }
     stream.close();
-    return 0;
+    return;
 }
