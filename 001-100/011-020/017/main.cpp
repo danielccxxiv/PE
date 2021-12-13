@@ -8,10 +8,10 @@ int main() {
 	std::string hundred = "hundred";
 	std::string thousand = "thousand";
 	std::string word_and = "and";
-	uint32_t total = 0;
-	for(uint32_t i = 0; i < 10; i++) {
-		for(uint32_t j = 0; j < 10; j++) {
-			for(uint32_t k = 0; k < 10; k++) {
+	int32_t total = 0;
+	for(int32_t i = 0; i < 10; i++) {
+		for(int32_t j = 0; j < 10; j++) {
+			for(int32_t k = 0; k < 10; k++) {
 				if((i + j + k) == 0) {
 					continue;
 				}

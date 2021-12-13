@@ -1,17 +1,17 @@
 
 #include "main.hpp"
 
-int main(int argc, char** argv) {
-    int* data;
+int main() {
+    int32_t* data;
     read_file("poker.txt", &data);
-    int count = 0;
+    int32_t count = 0;
     omp::HandEvaluator eval;
     omp::Hand h0;
     omp::Hand h1;
-    for(int i = 0; i < N; i++) {
+    for(int32_t i = 0; i < N; i++) {
         h0 = omp::Hand::empty();
         h1 = omp::Hand::empty();
-        for(int j = 0; j < 5; j++) {
+        for(int32_t j = 0; j < 5; j++) {
             h0 += omp::Hand(data[10 * i + j]);
             h1 += omp::Hand(data[10 * i + j + 5]);
         }
@@ -23,21 +23,21 @@ int main(int argc, char** argv) {
 	return 0;
 }
 
-int read_file(std::string filename, int** param) {
-	int* data = new int[10 * N];
+void read_file(std::string filename, int32_t** param) {
+	int32_t* data = new int32_t[10 * N];
 	boost::filesystem::ifstream stream;
 	stream.open(filename);
 	std::string raw_data;
     std::string card_data;
     char num;
     char suit;
-    int card_val;
+    int32_t card_val;
     boost::tokenizer<>::iterator tok_iter;
-	for(int i = 0; i < N; i++) {
+	for(int32_t i = 0; i < N; i++) {
 		getline(stream, raw_data);
 		boost::tokenizer<> tok(raw_data);
         tok_iter = tok.begin();
-		for(int j = 0; j < 10; j++) {
+		for(int32_t j = 0; j < 10; j++) {
 			card_data = *tok_iter;
             num = card_data.at(0);
             suit = card_data.at(1);
@@ -87,5 +87,5 @@ int read_file(std::string filename, int** param) {
 	}
 	stream.close();
 	*param = data;
-	return 0;
+	return;
 }

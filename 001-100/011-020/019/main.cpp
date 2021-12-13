@@ -2,10 +2,10 @@
 #include "main.hpp"
 
 int main() {
-	uint32_t year = 1901;
-	uint32_t days = 365;
-	uint32_t sum = 0;
-	uint32_t i = 6;
+	int32_t year = 1901;
+	int32_t days = 365;
+	int32_t sum = 0;
+	int32_t i = 6;
 	while(year <= 2000) {
 		if((i + 7) <= days) {
 			if((year % 400 == 0) || ((year % 4 == 0) && (year % 100 != 0))) {
@@ -23,7 +23,7 @@ int main() {
 			}
 			i += 7;
 		} else {
-			uint32_t pdays = days;
+			int32_t pdays = days;
 			year++;
 			if((year % 400 == 0) || ((year % 4 == 0) && (year % 100 != 0))) {
 				days = 366 + (pdays - i);

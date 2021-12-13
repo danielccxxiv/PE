@@ -1,14 +1,14 @@
 
 #include "main.hpp"
 
-int main(int argc, char** argv) {
-    int* d = new int[10];
-    for(int i = 0; i < 10; i++) {
+int main() {
+    int32_t* d = new int32_t[10];
+    for(int32_t i = 0; i < 10; i++) {
         d[i] = i;
     }
-    int loop_limit = factorial<int>(10);
-    long sum = 0;
-    for(int i = 0; i < loop_limit; i++) {
+    int32_t loop_limit = factorial<int32_t>(10);
+    int64_t sum = 0;
+    for(int32_t i = 0; i < loop_limit; i++) {
         if(((d[3] % 2) == 0)
             && (((100 * d[2] + 10 * d[3] + d[4]) % 3) == 0)
             && ((d[5] % 5) == 0)

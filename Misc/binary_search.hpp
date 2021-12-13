@@ -33,7 +33,7 @@ template<class T> int32_t binary_search(const T* arr, const T& val, int32_t star
 
 // search in range [start, start + len), not [start, start + len]
 // if negative result, value would be in position -n - 1
-template<class T> int binary_search(const std::vector<T>& arr, const T& val, int32_t start, int32_t len) {
+template<class T> int32_t binary_search(const std::vector<T>& arr, const T& val, int32_t start, int32_t len) {
     int32_t end = start + len - 1;
 	int32_t mid;
 	while(start <= end) {

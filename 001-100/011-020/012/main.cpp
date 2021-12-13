@@ -2,10 +2,10 @@
 #include "main.hpp"
 
 int main() {
-	uint32_t n = 3;
-	uint32_t a;
-    uint32_t b;
-    uint32_t num_facts = 0;
+	int32_t n = 3;
+	int32_t a;
+    int32_t b;
+    int32_t num_facts = 0;
 	while(num_facts <= 500) {
 		a = n;
 		b = n + 1;
@@ -14,8 +14,8 @@ int main() {
 		} else {
 			b /= 2;
 		}
-        num_facts = factor_count<uint32_t, true>(factor<uint32_t, uint32_t, true>(a))
-            * factor_count<uint32_t, true>(factor<uint32_t, uint32_t, true>(b));
+        num_facts = factor_count<int32_t, true>(factor<int32_t, int32_t, true>(a))
+            * factor_count<int32_t, true>(factor<int32_t, int32_t, true>(b));
 		n++;
 	}
 	std::cout << a * b << std::endl;

@@ -2,8 +2,17 @@
 #ifndef MAIN_HPP
 #define MAIN_HPP
 
-#include <cstring>
+#include <cstddef>
+#include <cstdint>
 #include <iostream>
+
+typedef std::int32_t int32_t;
+typedef std::uint32_t uint32_t;
+typedef std::int64_t int64_t;
+typedef std::uint64_t uint64_t;
+typedef std::size_t size_t;
+
+#include <cstring>
 #include <stdexcept>
 
 #include <boost/filesystem/fstream.hpp>
@@ -12,8 +21,8 @@
 
 #include "OMPEval/omp/HandEvaluator.h"
 
-static const int N = 1000;
+static const int32_t N = 1000;
 
-int read_file(std::string filename, int** param);
+void read_file(std::string filename, int32_t** param);
 
 #endif

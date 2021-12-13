@@ -14,10 +14,10 @@ typedef std::size_t size_t;
 #include <stdexcept>
 
 // Well defined only for non-negtive num and base > 1
-template<class T, class B> int32_t digit_sum(T num, B base = 10) {
-    int32_t sum = 0;
+template<class T, class B, class R = B> R digit_sum(T num, B base = 10) {
+    R sum = 0;
 	while(num > 0) {
-        sum += (num % base);
+        sum += static_cast<R>(num % base);
 		num /= base;
 	}
 	return sum;

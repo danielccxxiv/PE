@@ -1,15 +1,15 @@
 
 #include "main.hpp"
 
-int main(int argc, char** argv) {
+int main() {
     std::vector<int> data;
     read_file("cipher.txt", data);
-    int* key_arr = new int[3];
-    key_arr[0] = (int) 'e';
-    key_arr[1] = (int) 'x';
-    key_arr[2] = (int) 'p';
-    int ascii_sum = 0;
-    for(int i = 0; i < data.size(); i++) {
+    int32_t* key_arr = new int32_t[3];
+    key_arr[0] = (int32_t) 'e';
+    key_arr[1] = (int32_t) 'x';
+    key_arr[2] = (int32_t) 'p';
+    int32_t ascii_sum = 0;
+    for(size_t i = 0; i < data.size(); i++) {
         data[i] ^= key_arr[i % 3];
         ascii_sum += data[i];
     }
@@ -17,7 +17,7 @@ int main(int argc, char** argv) {
 	return 0;
 }
 
-int read_file(std::string filename, std::vector<int>& data) {
+void read_file(std::string filename, std::vector<int32_t>& data) {
 	boost::filesystem::ifstream stream;
 	stream.open(filename);
 	std::string raw_data;
@@ -27,9 +27,9 @@ int read_file(std::string filename, std::vector<int>& data) {
 	boost::tokenizer<boost::char_separator<char>> tok(raw_data, sep);
     iter = tok.begin();
 	while(iter != tok.end()) {
-        data.push_back(boost::lexical_cast<int>(*iter));
+        data.push_back(boost::lexical_cast<int32_t>(*iter));
         iter++;
     }
 	stream.close();
-	return 0;
+	return;
 }

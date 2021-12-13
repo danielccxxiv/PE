@@ -1,12 +1,12 @@
 
 #include "main.hpp"
 
-int main(int argc, char** argv) {
+int main() {
     primesieve::iterator prime_iter;
-    long prime = prime_iter.next_prime();
-    int n = 0;
-    int prime_count = 0;
-    long val;
+    int64_t prime = prime_iter.next_prime();
+    int32_t n = 0;
+    int32_t prime_count = 0;
+    int64_t val;
     while(true) {
         n++;
         val = n * (4 * n - 2) + 1;

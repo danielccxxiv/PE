@@ -1,15 +1,15 @@
 
 #include "main.hpp"
 
-int main(int argc, char** argv) {
-    int num = 1;
-    int denom = 1;
-    int frac_smp;
-    for(int i = 11; i < 100; i++) {
+int main() {
+    int32_t num = 1;
+    int32_t denom = 1;
+    int32_t frac_smp;
+    for(int32_t i = 11; i < 100; i++) {
         if(i % 10 == 0) {
             continue;
         }
-        for(int j = i + 1; j < 100; j++) {
+        for(int32_t j = i + 1; j < 100; j++) {
             if(j % 10 == 0) {
                 continue;
             }

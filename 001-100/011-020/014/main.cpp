@@ -2,14 +2,14 @@
 #include "main.hpp"
 
 int main() {
-    uint32_t steps;
-    uint32_t max = 0;
-    uint32_t ans = 1;
-    for(uint32_t i = 0; i < limit; i++) {
+    int32_t steps;
+    int32_t max = 0;
+    int32_t ans = 1;
+    for(int32_t i = 0; i < limit; i++) {
         data[i] = -1;
     }
     data[1] = 0;
-    for(uint32_t i = 2; i < limit; i++) {
+    for(int32_t i = 2; i < limit; i++) {
         steps = collatz(i);
         if(steps >= max) {
             max = steps;
@@ -20,14 +20,14 @@ int main() {
     return 0;
 }
 
-int32_t collatz(uint32_t n) {
+int32_t collatz(int32_t n) {
     if(n < limit) {
         if(data[n] != -1) {
             return data[n];
         }
     }
     int32_t count = 1;
-    uint64_t next;
+    int64_t next;
     if(n % 2 == 0) {
         next = n / 2;
     } else {

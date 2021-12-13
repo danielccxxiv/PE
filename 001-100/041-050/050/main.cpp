@@ -1,27 +1,27 @@
 
 #include "main.hpp"
 
-int main(int argc, char** argv) {
-    std::vector<int> prime_list;
+int main() {
+    std::vector<int32_t> prime_list;
     primesieve::generate_primes(limit, &prime_list);
-    int list_len = prime_list.size();
-    int max_len = 0;
-    int new_max_len;
-    int result = 0;
-    int sum;
-    for(int i = 0; i < list_len; i++) {
+    int32_t list_len = prime_list.size();
+    int32_t max_len = 0;
+    int32_t new_max_len;
+    int32_t result = 0;
+    int32_t sum;
+    for(int32_t i = 0; i < list_len; i++) {
         new_max_len = 0;
         if((i + max_len) > list_len) {
             break;
         }
         sum = 0;
-        for(int j = 0; j < max_len; j++) {
+        for(int32_t j = 0; j < max_len; j++) {
             sum += prime_list[i + j];
         }
         if(sum > limit) {
             break;
         }
-        for(int j = max_len; j < (list_len - i); j++) {
+        for(int32_t j = max_len; j < (list_len - i); j++) {
             sum += prime_list[i + j];
             if(sum > limit) {
                 break;

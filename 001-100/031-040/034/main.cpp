@@ -1,10 +1,10 @@
 
 #include "main.hpp"
 
-int main(int argc, char** argv) {
-    int sum = 0;
-    int limit = 7 * factorial<int>(9);
-    for(int i = 10; i < limit; i++) {
+int main() {
+    int32_t sum = 0;
+    int32_t limit = 7 * factorial<int32_t>(9);
+    for(int32_t i = 10; i < limit; i++) {
         if(i == digit_fact_sum(i)) {
             sum += i;
         }
@@ -13,10 +13,10 @@ int main(int argc, char** argv) {
 	return 0;
 }
 
-int digit_fact_sum(int n) {
-    int sum = 0;
+int32_t digit_fact_sum(int32_t n) {
+    int32_t sum = 0;
     while(n > 0) {
-        sum += factorial<int>(n % 10);
+        sum += factorial<int32_t>(n % 10);
         n /= 10;
     }
     return sum;

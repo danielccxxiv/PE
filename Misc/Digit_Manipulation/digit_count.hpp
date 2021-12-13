@@ -13,8 +13,8 @@ typedef std::size_t size_t;
 
 // Well defined only for non-negative num and base > 1
 // No overflow safety
-template<class T, class B> int32_t digit_count(T num, B base = 10) {
-	int32_t count = 0;
+template<class T, class B, class R = int32_t> R digit_count(T num, B base = 10) {
+	R count = 0;
     T lim = 1;
     while(!(num < lim)) {
     	lim *= base;
@@ -25,8 +25,8 @@ template<class T, class B> int32_t digit_count(T num, B base = 10) {
 
 // Well defined only for non-negative num and base > 1
 // Overflow safety
-template<class T, class B> int32_t digit_count_safe(T num, B base = 10) {
-    int32_t count = 0;
+template<class T, class B, class R = int32_t> R digit_count_safe(T num, B base = 10) {
+    R count = 0;
     while(num != 0) {
         num /= base;
         count++;

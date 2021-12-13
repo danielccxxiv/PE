@@ -1,25 +1,25 @@
 #include "main.hpp"
 
-int main(int argc, char** argv) {
-    int last_prime = prime<int>::iter.next_prime();
-    int num_digits = 3;
+int main() {
+    int32_t last_prime = prime<int32_t>::iter.next_prime();
+    int32_t num_digits = 3;
     bool* wildcard_arr;
-    int max_val;
+    int32_t max_val;
     while(wc_primes.size() == 0) {
         num_digits++;
         wildcard_arr = new bool[num_digits];
-        max_val = pow<int, int>(10, num_digits);
+        max_val = pow_int<int32_t, int32_t>(10, num_digits);
         while(last_prime < max_val) {
-            prime<int>::list.push_back(last_prime);
-            last_prime = prime<int>::iter.next_prime();
+            prime<int32_t>::list.push_back(last_prime);
+            last_prime = prime<int32_t>::iter.next_prime();
         }
-        for(int i = 3; i < num_digits; i += 3) {
+        for(int32_t i = 3; i < num_digits; i += 3) {
             loop_wildcard(wildcard_arr, num_digits, 0, i, 0, 0);
         }
         delete[] wildcard_arr;
     }
-    max_val = pow<int, int>(10, num_digits - 1);
-    for(int p: wc_primes) {
+    max_val = pow_int<int32_t, int32_t>(10, num_digits - 1);
+    for(int32_t p: wc_primes) {
         if(p >= max_val) {
             std::cout << p << std::endl;
             break;
@@ -28,7 +28,7 @@ int main(int argc, char** argv) {
 	return 0;
 }
 
-int loop_wildcard(bool* wc_arr, int len, int level, int wildcard_limit, int wildcard_count, int offset) {
+int32_t loop_wildcard(bool* wc_arr, int32_t len, int32_t level, int32_t wildcard_limit, int32_t wildcard_count, int32_t offset) {
     if((len - level) < (wildcard_limit - wildcard_count)) {
         return 0;
     }
@@ -39,20 +39,20 @@ int loop_wildcard(bool* wc_arr, int len, int level, int wildcard_limit, int wild
     loop_wildcard(wc_arr, len, level + 1, wildcard_limit, wildcard_count, offset);
     if((wildcard_count < wildcard_limit) && (level > 0)) {
         wc_arr[level] = false;
-        loop_wildcard(wc_arr, len, level + 1, wildcard_limit, wildcard_count + 1, offset + pow<int, int>(10, level));
+        loop_wildcard(wc_arr, len, level + 1, wildcard_limit, wildcard_count + 1, offset + pow_int<int32_t, int32_t>(10, level));
     }
     return 0;
 }
 
-int loop_fill(bool* wc_arr, int len, int level, int base_val, int offset) {
+int32_t loop_fill(bool* wc_arr, int32_t len, int32_t level, int32_t base_val, int32_t offset) {
     if(level == len) {
-        int count = 0;
-        int low;
-        int val;
-        int lower_limit = pow<int, int>(10, len - 1);
-        for(int i = 0; i < 10; i++) {
+        int32_t count = 0;
+        int32_t low;
+        int32_t val;
+        int32_t lower_limit = pow_int<int32_t, int32_t>(10, len - 1);
+        for(int32_t i = 0; i < 10; i++) {
             val = base_val + i * offset;
-            if((val >= lower_limit) && (binary_search(prime<int>::list, val, 0, prime<int>::list.size()) >= 0)) {
+            if((val >= lower_limit) && (binary_search(prime<int32_t>::list, val, 0, prime<int32_t>::list.size()) >= 0)) {
                 if(count == 0) {
                     low = val;
                 }
@@ -68,8 +68,8 @@ int loop_fill(bool* wc_arr, int len, int level, int base_val, int offset) {
         loop_fill(wc_arr, len, 1, 7, offset);
         loop_fill(wc_arr, len, 1, 9, offset);
     } else if(wc_arr[level]) {
-        for(int i = 0; i < 10; i++) {
-            loop_fill(wc_arr, len, level + 1, base_val + i * pow<int, int>(10, level), offset);
+        for(int32_t i = 0; i < 10; i++) {
+            loop_fill(wc_arr, len, level + 1, base_val + i * pow_int<int32_t, int32_t>(10, level), offset);
         }
     } else {
         loop_fill(wc_arr, len, level + 1, base_val, offset);
