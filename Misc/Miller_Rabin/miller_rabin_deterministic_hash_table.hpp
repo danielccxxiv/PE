@@ -2,7 +2,8 @@
 #ifndef MILLER_RABIN_DETERMINISTIC_HASH_TABLE_HPP
 #define MILLER_RABIN_DETERMINISTIC_HASH_TABLE_HPP
 
-static const uint64_t mr_det_64_last_check_limit = (1 << 49);
+#include "../../Headers/integer_numeric_types.hpp"
+
 static const uint32_t mr_det_32_hash_mult = 0xAD625B89;
 static const uint32_t mr_det_64_hash_mult = 0xAD625B89;
 

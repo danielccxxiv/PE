@@ -29,11 +29,9 @@ template<class T, class E> T pow_int(T base, E exponent) {
 
 // Template with no safety (possible overflows)
 // Expected sanitization of inputs:
-// both integer types, non-negative exponent, mod greater than 1
+// both integer types, non-negative base, non-negative exponent, mod greater than 1
 template<class T, class E> T pow_int_mod(T base, E exponent, T mod) {
-    if(base < 0) {
-        base = (mod - ((-base) % mod)) % mod;
-    } else if(base >= mod) {
+    if(base >= mod) {
         base = base % mod;
     }
     T result = 1;
@@ -51,11 +49,9 @@ template<class T, class E> T pow_int_mod(T base, E exponent, T mod) {
 
 // Template with some safety (overflow handling)
 // Expected sanitization of inputs:
-// both integer types, non-negative exponent, mod greater than 1
+// both integer types, non-negative base, non-negative exponent, mod greater than 1
 template<class T, class E> T pow_int_mod_ofl_check(T base, E exponent, T mod) {
-    if(base < 0) {
-        base = (mod - ((-base) % mod)) % mod;
-    } else if(base >= mod) {
+    if(base >= mod) {
         base = base % mod;
     }
     T result = 1;
