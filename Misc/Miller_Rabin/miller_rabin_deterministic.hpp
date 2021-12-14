@@ -2,17 +2,19 @@
 #ifndef MILLER_RABIN_DETERMINISTIC_HPP
 #define MILLER_RABIN_DETERMINISTIC_HPP
 
-#include "../../Headers/integer_numeric_types.hpp"
+#include "../../Headers/std_integer_numeric_types.hpp"
+#include "../../Headers/boost_integer_numeric_types.hpp"
 
 #include <climits>
 
-#include <boost/multiprecision/cpp_dec_float.hpp>
+#include <boost/math/special_functions/log1p.hpp>
+#include <boost/multiprecision/cpp_bin_float.hpp>
 
 #include "miller_rabin_deterministic_hash_table.hpp"
 #include "../gcd.hpp"
 #include "../pow_functions.hpp"
 
-typedef boost::multiprecision::cpp_dec_float_100 cpp_dec_float_100;
+typedef boost::multiprecision::cpp_bin_float_100 cpp_bin_float_100;
 
 static const uint64_t mr_det_64_last_check_limit = pow_int<uint64_t, int32_t>(2, 49);
 static const uint64_t uint_64_val_2 = 2;
@@ -32,7 +34,7 @@ template<class T, class L> bool miller_rabin_det_backend(T num) {
     }
     L num_cast = static_cast<L>(num);
     L max_residue = num_cast - 1;
-    double log_val = boost::multiprecision::log((cpp_dec_float_100) num);
+    double log_val = boost::math::log1p((cpp_bin_float_100) num);
     int32_t limit = static_cast<int32_t>(2.0 * log_val * log_val) + 1;
     L x;
     bool loop_check;
@@ -174,8 +176,8 @@ template<> bool miller_rabin_det<uint64_t>(uint64_t num) {
             x = (x * x) % num_cast;
             if(x == max_residue) {
                 loop_check = false;
+                break;
             }
-            break;
         }
         if(loop_check) {
             return false;

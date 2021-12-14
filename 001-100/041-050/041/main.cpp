@@ -9,7 +9,7 @@ int main() {
     int32_t reset_limit = pow_int<int32_t, int32_t>(10, digits);
     int32_t pandigital = 1;
     int32_t pandigital_hash = unordered_digit_hash<int32_t, int32_t>(pandigital);
-    while(num < 10000000) {
+    while(num < 7654322) {
         if(num >= reset_limit) {
             digits++;
             reset_limit *= 10;

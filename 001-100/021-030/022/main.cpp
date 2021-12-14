@@ -16,14 +16,14 @@ int main() {
     return 0;
 }
 
-void read_file(std::string filename, boost::container::set<std::string>& param) {
+void read_file(std::string filename, boost::container::set<std::string>& data) {
     boost::filesystem::ifstream stream;
     stream.open(filename);
     std::string raw_data;
     getline(stream, raw_data);
     boost::tokenizer<> tok(raw_data);
     for(std::string t: tok) {
-        param.emplace(t);
+        data.emplace(t);
     }
     stream.close();
     return;
