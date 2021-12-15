@@ -5,22 +5,25 @@
 #include "../../../Headers/std_integer_numeric_types.hpp"
 #include <iostream>
 
+#include <algorithm>
+#include <stack>
 #include <vector>
 
 #include <boost/heap/priority_queue.hpp>
 
-// #include "../../../Misc/Miller_Rabin/miller_rabin_deterministic.hpp"
+#include "../../../Misc/Digit_Manipulation/digit_count.hpp"
+#include "../../../Misc/Miller_Rabin/miller_rabin_deterministic.hpp"
 #include "../../../Misc/Sequences/prime_sequence.hpp"
 
 typedef struct prime_node {
     int32_t prime_pos;
     int32_t level;
-    std::vector<prime_node*> next;
     int32_t vec_iter;
+    std::vector<prime_node*> next;
     prime_node* parent;
 
-    prime_node(int32_t num, prime_node* parent = NULL) {
-        this->num = num;
+    prime_node(int32_t prime_pos, prime_node* parent = NULL) {
+        this->prime_pos = prime_pos;
         this->parent = parent;
         if(parent) {
             this->level = parent->level + 1;
@@ -45,7 +48,7 @@ typedef struct prime_node_pq_wrap {
         this->node = node;
         node->vec_iter = 0;
         if((node->next).size() > 0) {
-            this->val = node->next[(node->next).size() - 1].prime_pos;
+            this->val = (node->next[(node->next).size() - 1])->prime_pos;
         } else {
             this->val = 0;
         }
@@ -58,28 +61,7 @@ typedef struct prime_node_c {
     }
 } prime_node_c;
 
+void prime_node_loop(prime_node& base_node, int32_t prime_pos_next, std::vector<prime_node*>& storage);
+bool connected(int32_t i, int32_t j);
+
 #endif
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//
