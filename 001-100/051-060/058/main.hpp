@@ -7,6 +7,6 @@
 
 #include <primesieve.hpp>
 
-#include "../../../Misc/Miller_Rabin/miller_rabin_deterministic.hpp"
+#include "../../../Libs/Miller_Rabin_Deterministic/miller_rabin_deterministic.hpp"
 
 #endif

@@ -3,8 +3,23 @@
 
 #include <boost/math/special_functions/log1p.hpp>
 #include <boost/multiprecision/cpp_bin_float.hpp>
+#include <boost/multiprecision/cpp_int.hpp>
 
 typedef std::int32_t int32_t;
+typedef std::uint32_t uint32_t;
+typedef std::int64_t int64_t;
+typedef std::uint64_t uint64_t;
+
+typedef boost::multiprecision::int128_t int128_t;
+typedef boost::multiprecision::uint128_t uint128_t;
+typedef boost::multiprecision::int256_t int256_t;
+typedef boost::multiprecision::uint256_t uint256_t;
+typedef boost::multiprecision::int512_t int512_t;
+typedef boost::multiprecision::uint512_t uint512_t;
+typedef boost::multiprecision::int1024_t int1024_t;
+typedef boost::multiprecision::uint1024_t uint1024_t;
+typedef boost::multiprecision::cpp_int cpp_int;
+
 typedef boost::multiprecision::cpp_bin_float_100 cpp_bin_float_100;
 
 template<class T> T gcd(T a, T b) {
@@ -55,7 +70,7 @@ template<class T, class L> bool miller_rabin_det_backend(T num) {
             return false;
         }
         loop_check = true;
-        x = pow_int_mod<L, T>(i, d, num_cast);
+        x = pow_int_mod<L, T>(static_cast<L>(i), d, num_cast);
         if((x != 1) && (x != max_residue)) {
             for(int32_t j = 1; j < r; j++) {
                 x = (x * x) % num_cast;
@@ -70,4 +85,24 @@ template<class T, class L> bool miller_rabin_det_backend(T num) {
         }
     }
     return true;
+}
+
+bool miller_rabin_det_128_bit(uint128_t num) {
+    return miller_rabin_det_backend<uint128_t, uint256_t>(num);
+}
+
+bool miller_rabin_det_256_bit(uint256_t num) {
+    return miller_rabin_det_backend<uint256_t, uint512_t>(num);
+}
+
+bool miller_rabin_det_512_bit(uint512_t num) {
+    return miller_rabin_det_backend<uint512_t, uint1024_t>(num);
+}
+
+bool miller_rabin_det_1024_bit(uint1024_t num) {
+    return miller_rabin_det_backend<uint1024_t, cpp_int>(num);
+}
+
+bool miller_rabin_det_cpp_int(cpp_int num) {
+    return miller_rabin_det_backend<cpp_int, cpp_int>(num);
 }
