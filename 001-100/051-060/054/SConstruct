@@ -3,5 +3,5 @@ env = Environment(CC = 'g++', CCFLAGS = ['-Wall', '-O3'])
 
 env.Object('main.cpp')
 env.Library('ompeval', ['OMPEval/omp/CardRange.cpp', 'OMPEval/omp/CombinedRange.cpp', 'OMPEval/omp/EquityCalculator.cpp', 'OMPEval/omp/HandEvaluator.cpp'])
-env.Program(target = 'main', src = ['main.o'], LIBS = ['ompeval'], LIBPATH = '.')
+env.Program(target = 'main', src = ['main.o'], LIBS = ['ompeval'], LIBPATH = ['.'])
 

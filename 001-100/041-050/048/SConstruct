@@ -2,5 +2,5 @@
 env = Environment(CC = 'g++', CCFLAGS = ['-Wall', '-O3'])
 
 env.Object('main.cpp')
-env.Program(target = 'main', src = ['main.o'], LIBS = [], LIBPATH = '.')
+env.Program(target = 'main', src = ['main.o'], LIBS = ['primesieve'], LIBPATH = [])
 
