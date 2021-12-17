@@ -11,8 +11,10 @@
 
 #include <boost/heap/priority_queue.hpp>
 
+#include "../../../Libs/Miller_Rabin_Deterministic/miller_rabin_deterministic.hpp"
+
+#include "../../../Misc/pow_functions.hpp"
 #include "../../../Misc/Digit_Manipulation/digit_count.hpp"
-#include "../../../Misc/Miller_Rabin/miller_rabin_deterministic.hpp"
 #include "../../../Misc/Sequences/prime_sequence.hpp"
 
 typedef struct prime_node {
