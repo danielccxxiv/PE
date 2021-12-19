@@ -56,7 +56,7 @@ template<class T, class P, bool CACHE> prime_factor_list<T>* factor(T num) {
 }
 
 template<class T, class P> prime_factor_list<T>* factor_loop_cache(T num, size_t prime_list_pos) {
-    prime_factor_list<T>* result = new prime_factor_list<T>;
+    prime_factor_list<T>* result = new prime_factor_list<T>();
     result->num = num;
     while(prime_list_pos >= prime<P>::list.size()) {
         prime<P>::list.push_back(prime<P>::iter.next_prime());
@@ -127,7 +127,7 @@ template<class T, class P> prime_factor_list<T>* factor_loop_cache(T num, size_t
 }
 
 template<class T, class P> prime_factor_list<T>* factor_loop_no_cache(T num) {
-    prime_factor_list<T>* result = new prime_factor_list<T>;
+    prime_factor_list<T>* result = new prime_factor_list<T>();
     result->num = num;
     size_t prime_list_pos = 0;
     while(prime_list_pos >= prime<P>::list.size()) {
@@ -179,17 +179,18 @@ template<class T, class P> prime_factor_list<T>* factor_loop_no_cache(T num) {
 }
 
 template<class T, class P, bool CACHE> prime_factor_list<T>* mult_factor(T num1, T num2) {
-    prime_factor_data<T>::factor_iter = prime_factor_data<T>::factor_map.find(num1 * num2);
+    T num_product = num1 * num2;
+    prime_factor_data<T>::factor_iter = prime_factor_data<T>::factor_map.find(num_product);
     if(prime_factor_data<T>::factor_iter != prime_factor_data<T>::factor_map.end()) {
-        return prime_factor_data<T>::factor_iter->second;
+        return &(prime_factor_data<T>::factor_iter->second);
     }
     if((num1 == 1) || (num2 == 1)) {
-        return factor<T, P, CACHE>(num1 * num2);
+        return factor<T, P, CACHE>(num_product);
     }
     prime_factor_list<T>* f1 = factor<T, P, CACHE>(num1);
     prime_factor_list<T>* f2 = factor<T, P, CACHE>(num2);
     prime_factor_list<T>* result = new prime_factor_list<T>();
-    result->num = num1 * num2;
+    result->num = num_product;
     size_t s1 = f1->len;
     size_t s2 = f2->len;
     T* p1 = f1->primes;
@@ -247,6 +248,9 @@ template<class T, class P, bool CACHE> prime_factor_list<T>* mult_factor(T num1,
     }
     if(CACHE) {
         prime_factor_data<T>::factor_map.emplace(result->num, *result);
+    } else {
+        delete f1;
+        delete f2;
     }
     return result;
 }
