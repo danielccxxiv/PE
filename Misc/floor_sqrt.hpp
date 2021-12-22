@@ -1,18 +1,15 @@
 
-#ifndef FLOOR_SQRT_HPP
-#define FLOOR_SQRT_HPP
+#ifndef INTEGER_SQRT_HPP
+#define INTEGER_SQRT_HPP
 
 #include "../Headers/std_integer_numeric_types.hpp"
 #include "../Headers/boost_integer_numeric_types.hpp"
+#include "../Headers/boost_integer_numeric_types_macros.hpp"
 
 #include <cstring>
 
-#include <boost/lexical_cast.hpp>
-
-template<class T> T floor_sqrt(T num);
-
-template<class T> size_t floor_sqrt_lg_bit_loop_max() {
-    size_t max_bits_check = sizeof(T) >> 1;
+template<class T> int32_t int_sqrt_lg_bit_loop_max() {
+    size_t max_bits_check = std::numeric_limits<T>::digits >> 1;
     size_t lg_bit_loop = 1;
     while(max_bits_check) {
         max_bits_check >>= 1;
@@ -20,6 +17,37 @@ template<class T> size_t floor_sqrt_lg_bit_loop_max() {
     }
     return lg_bit_loop;
 }
+
+template<class T> T int_sqrt(T num) {
+    static_assert(std::numeric_limits<T>::is_integer);
+    if(std::numeric_limits<T>::is_signed) {
+        if(num < 0) {
+            throw "int_sqrt<T>(T num): negative input";
+        }
+    }
+    if(std::numeric_limits<T>::is_bounded && (std::numeric_limits<T>::digits & 1)) {
+        BOOST_UINT(std::numeric_limits<T>::digits + 1) num_cast = static_cast<BOOST_UINT(std::numeric_limits<T>::digits + 1)>(num);
+
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//
+
 
 template<> int32_t floor_sqrt<int32_t>(int32_t num) {
     if(num < 0) {

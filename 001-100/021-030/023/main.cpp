@@ -8,7 +8,7 @@ int main() {
     }
     std::vector<int32_t> ab_list;
     for(int32_t i = 2; i < N; i++) {
-        if(factor_sum<int32_t, false>(factor<int32_t, int32_t, true>(i)) > (i + i)) {
+        if(factor_sum<int32_t, false>(i, factor<int32_t, int32_t, true>(i)) > (i + i)) {
             ab_list.push_back(i);
         }
     }

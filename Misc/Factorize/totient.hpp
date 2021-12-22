@@ -4,6 +4,8 @@
 
 #include "../../Headers/std_integer_numeric_types.hpp"
 
+#include <cstring>
+
 #include <boost/unordered_map.hpp>
 
 #include "factorize.hpp"
@@ -17,10 +19,15 @@ template<class T> struct totient_data {
 template<class T> boost::unordered_map<T, T> totient_data<T>::totient_map;
 template<class T> typename boost::unordered_map<T, T>::iterator totient_data<T>::totient_iter;
 
-template<class T, bool CACHE> T totient(prime_factor_list<T>* x) {
-    totient_data<T>::totient_iter = totient_data<T>::totient_map.find(x->num);
+template<class T, class P, bool CACHE, bool factor_CACHE = CACHE> T totient(T num, prime_factor_list<T>* x = nullptr) {
+    totient_data<T>::totient_iter = totient_data<T>::totient_map.find(num);
     if(totient_data<T>::totient_iter != totient_data<T>::totient_map.end()) {
         return totient_data<T>::totient_iter->second;
+    }
+    if(x == nullptr) {
+        x = factor<T, P, factor_CACHE>(num);
+    } else if(num < 1) {
+        throw "totient<T>: num less than 1";
     }
     T product = 1;
     for(size_t i = 0; i < x->len; i++) {
@@ -28,7 +35,7 @@ template<class T, bool CACHE> T totient(prime_factor_list<T>* x) {
         product *= (x->primes[i] - 1);
     }
     if(CACHE) {
-        totient_data<T>::totient_map.emplace(x->num, product);
+        totient_data<T>::totient_map.emplace(num, product);
     }
     return product;
 }

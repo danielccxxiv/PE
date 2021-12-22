@@ -4,6 +4,8 @@
 
 #include "../../Headers/std_integer_numeric_types.hpp"
 
+#include <cstring>
+
 #include <boost/unordered_map.hpp>
 
 #include "factorize.hpp"
@@ -23,8 +25,15 @@ template<class T> typename boost::unordered_map<T, T>::iterator mult_group_size_
 
 template<class T> bool mult_group_size_loop(T num, T residue, prime_factor_list<T>* x, int32_t* arr, size_t level);
 
-template<class T, bool CACHE> T mult_group_size(T num, T base, prime_factor_list<T>* x) {
-    base = base % num;
+// does not test if inputs are relatively prime
+template<class T, class P, bool CACHE, bool factor_CACHE = CACHE, bool totient_CACHE = CACHE> T mult_group_size(T num, T base, prime_factor_list<T>* x = nullptr) {
+    if(num < 2) {
+        throw "mult_group_size<T>: num less than 2";
+    }
+    if(base < 0) {
+        throw "mult_group_size<T>: base less than 0";
+    }
+    base %= num;
     mult_group_size_data<T>::mult_group_size_iter0 = mult_group_size_data<T>::mult_group_size_map.find(num);
     if(mult_group_size_data<T>::mult_group_size_iter0 != mult_group_size_data<T>::mult_group_size_map.end()) {
         mult_group_size_data<T>::mult_group_size_iter1 = mult_group_size_data<T>::mult_group_size_iter0->second.find(base);
@@ -32,8 +41,10 @@ template<class T, bool CACHE> T mult_group_size(T num, T base, prime_factor_list
             return mult_group_size_data<T>::mult_group_size_iter1->second;
         }
     } else if(CACHE) {
-        mult_group_size_data<T>::mult_group_size_iter0 =
-            mult_group_size_data<T>::mult_group_size_map.emplace(num, *(new boost::unordered_map<T, T>())).first;
+        mult_group_size_data<T>::mult_group_size_iter0 = mult_group_size_data<T>::mult_group_size_map.emplace(num, boost::unordered_map<T, T>()).first;
+    }
+    if(x == nullptr) {
+        x = factor<T, P, factor_CACHE>(totient<T, P, totient_CACHE, factor_CACHE>(num));
     }
     int32_t* arr = new int32_t[x->len];
     for(size_t i = 0; i < x->len; i++) {

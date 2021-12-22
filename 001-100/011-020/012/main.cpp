@@ -14,8 +14,8 @@ int main() {
 		} else {
 			b /= 2;
 		}
-        num_facts = factor_count<int32_t, true>(factor<int32_t, int32_t, true>(a))
-            * factor_count<int32_t, true>(factor<int32_t, int32_t, true>(b));
+        num_facts = factor_count<int32_t, true>(a, factor<int32_t, int32_t, true>(a))
+            * factor_count<int32_t, true>(b, factor<int32_t, int32_t, true>(b));
 		n++;
 	}
 	std::cout << a * b << std::endl;

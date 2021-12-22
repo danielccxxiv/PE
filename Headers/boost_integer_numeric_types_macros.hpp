@@ -4,12 +4,12 @@
 
 #include <boost/multiprecision/cpp_int.hpp>
 
-#ifndef TYPEDEF_BOOST_INT(bit_count, name)
-#define TYPEDEF_BOOST_INT(bit_count, name) typedef boost::multiprecision::number<boost::multiprecision::cpp_int_backend<bit_count, bit_count, boost::multiprecision::signed_magnitude, boost::multiprecision::unchecked, void>> name;
+#ifndef BOOST_INT
+#define BOOST_INT(bit_count) boost::multiprecision::number<boost::multiprecision::cpp_int_backend<bit_count, bit_count, boost::multiprecision::signed_magnitude, boost::multiprecision::unchecked, void>>
 #endif
 
-#ifndef TYPEDEF_BOOST_UINT(bit_count, name)
-#define TYPEDEF_BOOST_UINT(bit_count, name) typedef boost::multiprecision::number<boost::multiprecision::cpp_int_backend<bit_count, bit_count, boost::multiprecision::unsigned_magnitude, boost::multiprecision::unchecked, void>> name;
+#ifndef BOOST_UINT
+#define BOOST_UINT(bit_count) boost::multiprecision::number<boost::multiprecision::cpp_int_backend<bit_count, bit_count, boost::multiprecision::unsigned_magnitude, boost::multiprecision::unchecked, void>>
 #endif
 
 #endif

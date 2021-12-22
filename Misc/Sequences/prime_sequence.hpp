@@ -11,10 +11,16 @@
 
 template<class T> struct prime {
     static std::vector<T> list;
-    static primesieve::iterator iter;
+
+    static void update(size_t pos) {
+        static primesieve::iterator iter;
+        while(pos >= list.size()) {
+            list.push_back(iter.next_prime());
+        }
+        return;
+    }
 };
 
 template<class T> std::vector<T> prime<T>::list;
-template<class T> primesieve::iterator prime<T>::iter;
 
 #endif
