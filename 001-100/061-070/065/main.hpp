@@ -12,11 +12,6 @@
 
 #include <boost/integer.hpp>
 
-template<class T> bool fixed_precision_test(int junk) {
-    return std::numeric_limits<T>::is_bounded;
-}
-
-
-// TYPEDEF_BOOST_UINT(2048, uint2048_t);
+#include "../../../Misc/integer_sqrt.hpp"
 
 #endif
