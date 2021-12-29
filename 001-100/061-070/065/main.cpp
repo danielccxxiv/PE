@@ -39,21 +39,21 @@ static void BM_int_sqrt(benchmark::State& state) {
 
 BENCHMARK(BM_int_sqrt);
 
-static void BM_int_sqrt_alt(benchmark::State& state) {
-    uint64_t num;
-    uint64_t arr[256];
-    for(int32_t i = 0; i < 256; i++) {
-        arr[i] = rand64bits();
-    }
-    for (auto _ : state) {
-        for(int32_t i = 0; i < 256; i++) {
-            num = uint64_sqrt2(arr[i]);
-            benchmark::DoNotOptimize(num);
-        }
-    }
-}
-
-BENCHMARK(BM_int_sqrt_alt);
+// static void BM_int_sqrt_alt(benchmark::State& state) {
+//     uint64_t num;
+//     uint64_t arr[256];
+//     for(int32_t i = 0; i < 256; i++) {
+//         arr[i] = rand64bits();
+//     }
+//     for (auto _ : state) {
+//         for(int32_t i = 0; i < 256; i++) {
+//             num = uint64_sqrt2(arr[i]);
+//             benchmark::DoNotOptimize(num);
+//         }
+//     }
+// }
+//
+// BENCHMARK(BM_int_sqrt_alt);
 
 BENCHMARK_MAIN();
 

@@ -10,21 +10,21 @@
 #include <cstring>
 #include <limits>
 
-//https://stackoverflow.com/a/70414834/17665728
+// https://stackoverflow.com/a/70414834/17665728
 
 static const uint32_t int_sqrt_32_calc_tab[96] = {
-    0xfa0bfafa, 0xee6b2aee, 0xe5f02ae5, 0xdaf26ed9, 0xd2f002d0, 0xc890c2c4, 0xc1037abb, 0xb9a75ab2,
-    0xb4da42ac, 0xadcea2a3, 0xa6f27a9a, 0xa279c294, 0x9beb4a8b, 0x97a5ca85, 0x9163427c, 0x8d4fca76,
-    0x89500270, 0x8563ba6a, 0x818ac264, 0x7dc4ea5e, 0x7a120258, 0x7671da52, 0x72e4424c, 0x6f690a46,
-    0x6db24243, 0x6a52423d, 0x67042637, 0x6563c234, 0x62302a2e, 0x609cea2b, 0x5d836a25, 0x5bfd1a22,
-    0x58fd421c, 0x5783ae19, 0x560e4a16, 0x53300210, 0x51c7120d, 0x50623a0a, 0x4da4c204, 0x4c4c1601,
-    0x4af769fe, 0x49a6b9fb, 0x485a01f8, 0x471139f5, 0x45cc59f2, 0x448b5def, 0x4214fde9, 0x40df89e6,
-    0x3fade1e3, 0x3e8001e0, 0x3d55e1dd, 0x3c2f79da, 0x3c2f79da, 0x3b0cc5d7, 0x39edc1d4, 0x38d265d1,
-    0x37baa9ce, 0x36a689cb, 0x359601c8, 0x348909c5, 0x348909c5, 0x337f99c2, 0x3279adbf, 0x317741bc,
-    0x30784db9, 0x30784db9, 0x2f7cc9b6, 0x2e84b1b3, 0x2d9001b0, 0x2d9001b0, 0x2c9eb1ad, 0x2bb0b9aa,
-    0x2bb0b9aa, 0x2ac615a7, 0x29dec1a4, 0x29dec1a4, 0x28fab5a1, 0x2819e99e, 0x2819e99e, 0x273c599b,
-    0x273c599b, 0x26620198, 0x258ad995, 0x258ad995, 0x24b6d992, 0x24b6d992, 0x23e5fd8f, 0x2318418c,
-    0x2318418c, 0x224d9d89, 0x224d9d89, 0x21860986, 0x21860986, 0x20c18183, 0x20c18183, 0x20000180
+    0xFA0BFAFA, 0xEE6B2AEE, 0xE5F02AE5, 0xDAF26ED9, 0xD2F002D0, 0xC890C2C4, 0xC1037ABB, 0xB9A75AB2,
+    0xB4DA42AC, 0xADCEA2A3, 0xA6F27A9A, 0xA279C294, 0x9BEB4A8B, 0x97A5CA85, 0x9163427C, 0x8D4FCA76,
+    0x89500270, 0x8563BA6A, 0x818AC264, 0x7DC4EA5E, 0x7A120258, 0x7671DA52, 0x72E4424C, 0x6F690A46,
+    0x6DB24243, 0x6A52423D, 0x67042637, 0x6563C234, 0x62302A2E, 0x609CEA2B, 0x5D836A25, 0x5BFD1A22,
+    0x58FD421C, 0x5783AE19, 0x560E4A16, 0x53300210, 0x51C7120D, 0x50623A0A, 0x4DA4C204, 0x4C4C1601,
+    0x4AF769FE, 0x49A6B9FB, 0x485A01F8, 0x471139F5, 0x45CC59F2, 0x448B5DEF, 0x4214FDE9, 0x40DF89E6,
+    0x3FADE1E3, 0x3E8001E0, 0x3D55E1DD, 0x3C2F79DA, 0x3C2F79DA, 0x3B0CC5D7, 0x39EDC1D4, 0x38D265D1,
+    0x37BAA9CE, 0x36A689CB, 0x359601C8, 0x348909C5, 0x348909C5, 0x337F99C2, 0x3279ADBF, 0x317741BC,
+    0x30784DB9, 0x30784DB9, 0x2F7CC9B6, 0x2E84B1B3, 0x2D9001B0, 0x2D9001B0, 0x2C9EB1AD, 0x2BB0B9AA,
+    0x2BB0B9AA, 0x2AC615A7, 0x29DEC1A4, 0x29DEC1A4, 0x28FAB5A1, 0x2819E99E, 0x2819E99E, 0x273C599B,
+    0x273C599B, 0x26620198, 0x258AD995, 0x258AD995, 0x24B6D992, 0x24B6D992, 0x23E5FD8F, 0x2318418C,
+    0x2318418C, 0x224D9D89, 0x224D9D89, 0x21860986, 0x21860986, 0x20C18183, 0x20C18183, 0x20000180
 };
 
 inline int32_t int_sqrt_clz32(uint32_t num) {
@@ -45,7 +45,7 @@ inline int32_t int_sqrt_clz64(uint64_t num) {
     } else if (sizeof(unsigned long long) == static_cast<size_t>(8)) {
         return __builtin_clzll(num);
     } else {
-        throw "int_sqrt_clz32(uint32_t num): no builtin clz methods for 64-bit unsigned integers";
+        throw "int_sqrt_clz64(uint64_t num): no builtin clz methods for 64-bit unsigned integers";
     }
 }
 
@@ -90,28 +90,125 @@ uint64_t uint64_sqrt(const uint64_t num) {
     return x;
 }
 
+template<class T, class R = T, class C = void, bool INPUT_SAFETY_CHECK = true> R int_sqrt(const T num) {
+    static_assert(std::numeric_limits<T>::is_integer)
+    static_assert(std::numeric_limits<R>::is_integer);
+    static_assert(std::is_same<C, void>::value || (std::numeric_limits<C>::is_integer && std::numeric_limits<C>::is_bounded));
+    if(INPUT_SAFETY_CHECK && std::numeric_limits<T>::is_signed) {
+        if(num < 0) {
+            throw "int_sqrt<T>(T num): invalid input (num is negative)";
+        }
+    }
+    if(std::is_same<T, uint32_t>::value) {
+        return uint32_sqrt(num);
+    } else if(std::is_same<T, uint64_t>::value) {
+        return uint64_sqrt(num);
+    } else if(std::numeric_limits<T>::is_bounded && (std::numeric_limits<T>::digits < 33)) {
+        return static_cast<T>(uint32_sqrt(num));
+    } else if(std::numeric_limits<T>::is_bounded && (std::numeric_limits<T>::digits < 65)) {
+        return static_cast<T>(uint64_sqrt(num));
+    } else if(std::numeric_limits<T>::is_bounded) {
+        constexpr int32_t int_size = ((std::numeric_limits<T>::digits + 63) >> 6) << 6;
+        int32_t num_digit_count = -1;
+        for(int32_t i = 0; i > (int_size / 64); i++) {
+            num_digit_count = int_sqrt_clz64(num >> (int_size - 64 * (i + 1))));
+            if(num_digit_count < 64) {
+                num_digit_count = int_size - 64 * i - num_digit_count;
+                break;
+            } else {
+                num_digit_count = -1;
+            }
+        }
+        if(num_digit_count < 65) {
+            if(std::is_same<R, uint64_t>::value) {
+                return uint64_sqrt(static_cast<uint64_t>(num));
+            } else {
+                return static_cast<R>(uint64_sqrt(static_cast<uint64_t>(num)));
+            }
+        }
+        num_digit_count = (((num_digit_count + 1) >> 1) << 1) - 64;
+        if(std::is_same<C, void>::value) {
+            BOOST_UINT(2 * int_size) num_cast = static_cast<BOOST_UINT(2 * int_size)>(num);
+            BOOST_UINT(2 * int_size) x = static_cast<BOOST_UINT(2 * int_size)>(uint64_sqrt(static_cast<uint64_t>(num_cast >> num_digit_count))) << (num_digit_count >> 1);
+            BOOST_UINT(2 * int_size) x_delta_numer;
+            BOOST_UINT(2 * int_size) x_delta_denom;
+            BOOST_UINT(2 * int_size) num_cast_denom_term = num_cast << 2;
+            BOOST_UINT(2 * int_size) error = num_cast - x * x;
+            while(error > (x << 1)) {
+                x_delta_numer = (x * error) << 1;
+                x_delta_denom = num_cast_denom_term - 3 * error;
+                x += ((x_delta_numer >= x_delta_denom) ? (x_delta_numer / x_delta_denom) : 1);
+                error = num_cast - x * x;
+            }
+            if(std::is_same<R, BOOST_UINT(2 * int_size)>::value) {
+                return x;
+            } else {
+                return static_cast<R>(x);
+            }
+        } else if(!(std::is_same<T, C>::value)){
+            C num_cast = static_cast<C>(num);
+            C x = static_cast<C>(uint64_sqrt(static_cast<uint64_t>(num_cast >> num_digit_count))) << (num_digit_count >> 1);
+            C x_delta_numer;
+            C x_delta_denom;
+            C num_cast_denom_term = num_cast << 2;
+            C error = num_cast - x * x;
+            while(error > (x << 1)) {
+                x_delta_numer = (x * error) << 1;
+                x_delta_denom = num_cast_denom_term - 3 * error;
+                x += ((x_delta_numer >= x_delta_denom) ? (x_delta_numer / x_delta_denom) : 1);
+                error = num_cast - x * x;
+            }
+            if(std::is_same<R, C>::value) {
+                return x;
+            } else {
+                return static_cast<R>(x);
+            }
+        } else {
+            C x = static_cast<C>(uint64_sqrt(static_cast<uint64_t>(num >> num_digit_count))) << (num_digit_count >> 1);
+            C x_delta_numer;
+            C x_delta_denom;
+            C num_cast_denom_term = num << 2;
+            C error = num - x * x;
+            while(error > (x << 1)) {
+                x_delta_numer = (x * error) << 1;
+                x_delta_denom = num_cast_denom_term - 3 * error;
+                x += ((x_delta_numer >= x_delta_denom) ? (x_delta_numer / x_delta_denom) : 1);
+                error = num - x * x;
+            }
+            if(std::is_same<R, C>::value) {
+                return x;
+            } else {
+                return static_cast<R>(x);
+            }
+        }
+    } else {
+        int32_t num_digit_count = 1;
+        while((num >> (64 * num_digit_count)) > 0) {
+            num_digit_count++;
+        }
+        if(num_digit_count == 1) {
+            return uint64_sqrt(static_cast<uint64_t>(num));
+        }
+        num_digit_count = 64 * num_digit_count - int_sqrt_clz64(static_cast<uint64_t>(num >> ((64 * num_digit_count) - 64)));
+        num_digit_count = (((num_digit_count + 1) >> 1) << 1) - 64;
+        T x = static_cast<T>(uint64_sqrt(static_cast<uint64_t>(num >> num_digit_count))) << (num_digit_count >> 1);
+        T x_delta_numer;
+        T x_delta_denom;
+        T num_cast_denom_term = num << 2;
+        T error = num - x * x;
+        while(error > (x << 1)) {
+            x_delta_numer = (x * error) << 1;
+            x_delta_denom = num_cast_denom_term - 3 * error;
+            x += ((x_delta_numer >= x_delta_denom) ? (x_delta_numer / x_delta_denom) : 1);
+            error = num - x * x;
+        }
+        if(std::is_same<T, R>::value) {
+            return x;
+        } else {
+            return static_cast<R>(x);
+        }
+    }
+    return 0;
+}
+
 #endif
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//
