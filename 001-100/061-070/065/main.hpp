@@ -8,9 +8,6 @@
 #include <iostream>
 
 #include <limits>
-#include <type_traits>
-
-#include <boost/integer.hpp>
 
 #include "../../../Misc/integer_sqrt.hpp"
 

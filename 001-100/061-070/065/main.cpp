@@ -1,10 +1,12 @@
 
 #include "main.hpp"
 
-#include <benchmark/benchmark.h>
+// #include <benchmark/benchmark.h>
 
 #include <random>
 #include <ctime>
+
+#include <boost/lexical_cast.hpp>
 
 unsigned rand256() {
     static unsigned const limit = RAND_MAX - RAND_MAX % 256;
@@ -23,44 +25,38 @@ unsigned long long rand64bits() {
     return results;
 }
 
-static void BM_int_sqrt(benchmark::State& state) {
-    uint64_t num;
-    uint64_t arr[256];
-    for(int32_t i = 0; i < 256; i++) {
-        arr[i] = rand64bits();
-    }
-    for (auto _ : state) {
-        for(int32_t i = 0; i < 256; i++) {
-            num = uint64_sqrt(arr[i]);
-            benchmark::DoNotOptimize(num);
-        }
-    }
-}
-
-BENCHMARK(BM_int_sqrt);
-
-// static void BM_int_sqrt_alt(benchmark::State& state) {
+// static void BM_int_sqrt(benchmark::State& state) {
+//     std::uint8_t y = 0;
 //     uint64_t num;
 //     uint64_t arr[256];
 //     for(int32_t i = 0; i < 256; i++) {
 //         arr[i] = rand64bits();
 //     }
 //     for (auto _ : state) {
-//         for(int32_t i = 0; i < 256; i++) {
-//             num = uint64_sqrt2(arr[i]);
-//             benchmark::DoNotOptimize(num);
-//         }
+//         num = uint64_sqrt(arr[y++]);
+//         benchmark::DoNotOptimize(num);
+//         // for(int32_t i = 0; i < 256; i++) {
+//         //     num = uint64_sqrt(arr[i]);
+//         //     benchmark::DoNotOptimize(num);
+//         // }
 //     }
 // }
 //
-// BENCHMARK(BM_int_sqrt_alt);
+// BENCHMARK(BM_int_sqrt);
+//
+// BENCHMARK_MAIN();
 
-BENCHMARK_MAIN();
-
-// int main() {
-//     std::cout << uint64_sqrt(13931850471406165487ULL) << std::endl;
-//     return 0;
-// }
+int main() {
+    uint256_t sq;
+    for(int64_t i = 0; i < 100; i++) {
+        sq = uint256_t((static_cast<uint256_t>(rand64bits()) << 192) + (static_cast<uint256_t>(rand64bits()) << 128)
+            + (static_cast<uint256_t>(rand64bits()) << 64) + rand64bits());
+        if(int_sqrt<uint256_t, uint256_t, uint512_t>(sq) == 0) {
+            std::cout << std::endl;
+        }
+    }
+    return 0;
+}
 
 
 
