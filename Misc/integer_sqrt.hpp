@@ -62,7 +62,7 @@ template<class T, class R = T, class C = T, bool SIGN_CHECK = true, bool CALCTYP
         return static_cast<R>(static_cast<int32_t>(std::sqrt(static_cast<double>(static_cast<int32_t>(num)))));
     } else if(T_eq_int64) {
         if(isqrt_int64_clz(static_cast<int64_t>(num)) < 12) { // 2 ** 52 or greater
-            int64_t num_sqrt = static_cast<int64_t>(std::sqrt(static_cast<double>((static_cast<int64_t>(num) >> 12) << 12)));
+            int64_t num_sqrt = static_cast<int64_t>(std::sqrt(static_cast<double>(static_cast<int64_t>(num) - static_cast<int64_t>(0x04000000))));
             return static_cast<R>((static_cast<int64_t>(num) > (num_sqrt * (num_sqrt + 2))) ? (++num_sqrt) : num_sqrt);
         } else { // less than 2 ** 52
             return static_cast<R>(static_cast<int64_t>(std::sqrt(static_cast<double>(static_cast<int64_t>(num)))));
@@ -71,7 +71,7 @@ template<class T, class R = T, class C = T, bool SIGN_CHECK = true, bool CALCTYP
         return static_cast<R>(static_cast<uint32_t>(std::sqrt(static_cast<double>(static_cast<uint32_t>(num)))));
     } else if(T_cast_uint64) {
         if(isqrt_uint64_clz(static_cast<uint64_t>(num)) < 12) { // 2 ** 52 or greater
-            uint64_t num_sqrt = static_cast<uint64_t>(std::sqrt(static_cast<double>((static_cast<uint64_t>(num) >> 12) << 12)));
+            uint64_t num_sqrt = static_cast<uint64_t>(std::sqrt(static_cast<double>(static_cast<uint64_t>(num) - static_cast<uint64_t>(0x04000000))));
             return static_cast<R>((static_cast<uint64_t>(num) > (num_sqrt * (num_sqrt + 2))) ? (++num_sqrt) : num_sqrt);
         } else { // less than 2 ** 52
             return static_cast<R>(static_cast<uint64_t>(std::sqrt(static_cast<double>(static_cast<uint64_t>(num)))));
