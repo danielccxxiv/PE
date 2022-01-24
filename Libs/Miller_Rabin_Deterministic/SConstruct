@@ -1,5 +1,0 @@
-
-env = Environment(CC = 'g++', CCFLAGS = ['-Wall', '-O3'])
-
-env.Library('miller-rabin-det', ['miller_rabin_deterministic_32_bit.cpp', 'miller_rabin_deterministic_64_bit.cpp', 'miller_rabin_deterministic_large_int_backend.cpp', 'miller_rabin_deterministic.cpp'])
-

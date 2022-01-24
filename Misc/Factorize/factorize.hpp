@@ -2,8 +2,7 @@
 #ifndef FACTORIZE_HPP
 #define FACTORIZE_HPP
 
-#include "../../Headers/std_integer_numeric_types.hpp"
-
+#include <cstdint>
 #include <cstring>
 #include <memory>
 #include <stack>
@@ -12,8 +11,13 @@
 #include <boost/unordered_set.hpp>
 
 #include "../binary_search.hpp"
-#include "../floor_sqrt.hpp"
+#include "../int_sqrt.hpp"
 #include "../Sequences/prime_sequence.hpp"
+
+typedef std::int32_t int32_t;
+typedef std::uint32_t uint32_t;
+typedef std::int64_t int64_t;
+typedef std::uint64_t uint64_t;
 
 template<class T> struct prime_factor_list {
 	T* primes;
@@ -40,12 +44,12 @@ template<class T> struct prime_factor_list_set_node {
     T num;
     std::unique_ptr<prime_factor_list<T>> pf_list_ptr;
 
-    prime_factor_list_set_node(const T num) {
+    prime_factor_list_set_node(const T& num) {
         this->num = num;
         this->pf_list_ptr = nullptr;
     }
 
-    prime_factor_list_set_node(const T num, std::unique_ptr<prime_factor_list<T>>* pf_list_ptr_ref) {
+    prime_factor_list_set_node(const T& num, std::unique_ptr<prime_factor_list<T>>* pf_list_ptr_ref) {
         this->num = num;
         this->pf_list_ptr = std::move(*pf_list_ptr_ref);
     }
@@ -70,14 +74,14 @@ template<class T> struct prime_factor_data {
     static typename boost::unordered_set<prime_factor_list_set_node<T>, prime_factor_list_set_node_hash<T>, prime_factor_list_set_node_equals<T>>::iterator factor_iter;
 };
 
-template<class T> boost::unordered_set<prime_factor_list_set_node<T>, prime_factor_list_set_node_hash<T>, prime_factor_list_set_node_equals<T>> prime_factor_data<T>::factor_set = {prime_factor_list_set_node<T>(1, &(std::make_unique()))};
+template<class T> boost::unordered_set<prime_factor_list_set_node<T>, prime_factor_list_set_node_hash<T>, prime_factor_list_set_node_equals<T>> prime_factor_data<T>::factor_set;
 template<class T> typename boost::unordered_set<prime_factor_list_set_node<T>, prime_factor_list_set_node_hash<T>, prime_factor_list_set_node_equals<T>>::iterator prime_factor_data<T>::factor_iter;
 
-template<class T, class P, bool CACHE> prime_factor_list<T>* factor(const T num);
-template<class T, class P, bool CACHE> prime_factor_list<T>* factor_loop(const T num, size_t prime_list_pos);
+template<class T, class P, bool CACHE> prime_factor_list<T>* factor(const T& num);
+template<class T, class P, bool CACHE> prime_factor_list<T>* factor_loop(const T& num, size_t prime_list_pos);
 
 // Well defined only for num > 1
-template<class T, class P, bool CACHE> prime_factor_list<T>* factor(const T num) {
+template<class T, class P, bool CACHE> prime_factor_list<T>* factor(const T& num) {
     prime_factor_data<T>::factor_iter = prime_factor_data<T>::factor_set.find(prime_factor_list_set_node<T>(num));
     if(prime_factor_data<T>::factor_iter != prime_factor_data<T>::factor_set.end()) {
         return (*prime_factor_data<T>::factor_iter).pf_list_ptr.get();
@@ -88,7 +92,7 @@ template<class T, class P, bool CACHE> prime_factor_list<T>* factor(const T num)
     return factor_loop<T, P, CACHE>(num, 0);
 }
 
-template<class T, class P, bool CACHE> prime_factor_list<T>* factor_loop(const T num, size_t prime_list_pos) {
+template<class T, class P, bool CACHE> prime_factor_list<T>* factor_loop(const T& num, size_t prime_list_pos) {
     prime_factor_list<T>* result;
     if(CACHE) {
         std::unique_ptr<prime_factor_list<T>> factor_unique_ptr = std::make_unique<prime_factor_list<T>>();
@@ -106,7 +110,7 @@ template<class T, class P, bool CACHE> prime_factor_list<T>* factor_loop(const T
         result->exp[0] = 1;
         return result;
     }
-    T val_sqrt = floor_sqrt(num) + 1;
+    T val_sqrt = int_sqrt<T>(num) + 1;
     bool sm_fact_found = false;
     while(prime<P>::list[prime_list_pos] < val_sqrt) {
         if((num % prime<P>::list[prime_list_pos]) == 0) {

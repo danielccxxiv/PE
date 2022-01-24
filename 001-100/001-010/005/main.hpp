@@ -5,7 +5,7 @@
 #include "../../../Headers/std_integer_numeric_types.hpp"
 #include <iostream>
 
-#include "../../../Misc/lcm.hpp"
+#include "../../../Misc/gcd.hpp"
 
 static const int64_t limit = 20;
 

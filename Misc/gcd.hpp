@@ -4,15 +4,20 @@
 
 #include "../Headers/std_integer_numeric_types.hpp"
 
-// Well defined only for non-negative inputs
-template<class T> T gcd(T a, T b) {
-	T temp;
-	while(b != 0) {
-		temp = b;
-		b = a % b;
-		a = temp;
+template<class T> T gcd(const T& a, const T& b) {
+    T a_cast = a;
+    T b_cast = b;
+	T t;
+	while(b_cast != 0) {
+		t = b_cast;
+		b_cast = a_cast % b_cast;
+		a_cast = t;
 	}
-	return a;
+	return a_cast;
+}
+
+template<class T> T lcm(const T& a, const T& b) {
+	return (a / gcd(a, b)) * b;
 }
 
 #endif
