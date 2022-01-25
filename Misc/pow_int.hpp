@@ -45,24 +45,24 @@ template<class B, class P, class C> inline B powm_detail(const B& b, P& p_cast, 
     C m_cast = static_cast<C>(m);
     C b_cast = static_cast<C>(std::abs(b)) % m_cast;
     C r = static_cast<C>(1);
-    while(p != static_cast<P>(0)) {
-        while((p & static_cast<P>(1)) == static_cast<P>(0)) {
+    while(p_cast != static_cast<P>(0)) {
+        while((p_cast & static_cast<P>(1)) == static_cast<P>(0)) {
             b_cast = (b_cast * b_cast) % m_cast;
-            p >>= 1;
+            p_cast >>= 1;
         }
         r = (r * b_cast) % m_cast;
-        p--;
+        p_cast--;
     }
     return r;
 }
 
-template<class B, class P> powm(const B& b, const P& p, const B& m) {
+template<class B, class P> B powm(const B& b, const P& p, const B& m) {
     static_assert(std::numeric_limits<B>::is_integer);
     static_assert(std::numeric_limits<P>::is_integer);
     static constexpr int32_t int32_wide_check = (static_cast<int32_t>(1) << 16) + static_cast<int32_t>(1);
     static constexpr uint32_t uint32_wide_check = (static_cast<uint32_t>(1) << 16) + static_cast<uint32_t>(1);
     static constexpr int64_t int64_wide_check = (static_cast<int64_t>(1) << 32) + static_cast<int64_t>(1);
-    static constexpr uint32_t uint64_wide_check = (static_cast<uint64_t>(1) << 32) + static_cast<uint64_t>(1);
+    static constexpr uint64_t uint64_wide_check = (static_cast<uint64_t>(1) << 32) + static_cast<uint64_t>(1);
     static constexpr bool B_is_int32 = std::is_same<B, int32_t>::value;
     static constexpr bool B_is_uint32 = std::is_same<B, uint32_t>::value;
     static constexpr bool B_is_int64 = std::is_same<B, int64_t>::value;

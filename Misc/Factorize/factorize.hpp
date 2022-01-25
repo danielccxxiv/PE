@@ -3,21 +3,22 @@
 #define FACTORIZE_HPP
 
 #include <cstdint>
-#include <cstring>
 #include <memory>
 #include <stack>
 #include <vector>
 
-#include <boost/unordered_set.hpp>
+#include <boost/unordered_map.hpp>
 
 #include "../binary_search.hpp"
 #include "../int_sqrt.hpp"
+#include "../pow_int.hpp"
 #include "../Sequences/prime_sequence.hpp"
 
 typedef std::int32_t int32_t;
 typedef std::uint32_t uint32_t;
 typedef std::int64_t int64_t;
 typedef std::uint64_t uint64_t;
+typedef std::size_t size_t;
 
 template<class T> struct prime_factor_list {
 	T* primes;
@@ -40,51 +41,22 @@ template<class T> struct prime_factor_list {
     }
 };
 
-template<class T> struct prime_factor_list_set_node {
-    T num;
-    std::unique_ptr<prime_factor_list<T>> pf_list_ptr;
-
-    prime_factor_list_set_node(const T& num) {
-        this->num = num;
-        this->pf_list_ptr = nullptr;
-    }
-
-    prime_factor_list_set_node(const T& num, std::unique_ptr<prime_factor_list<T>>* pf_list_ptr_ref) {
-        this->num = num;
-        this->pf_list_ptr = std::move(*pf_list_ptr_ref);
-    }
-};
-
-template<class T> struct prime_factor_list_set_node_hash {
-    size_t operator()(const prime_factor_list_set_node<T>& node) const {
-        size_t hash_val = 0;
-        boost::hash_combine(hash_val, node.num);
-        return hash_val;
-    }
-};
-
-template<class T> struct prime_factor_list_set_node_equals {
-    bool operator()(const prime_factor_list_set_node<T>& node0, const prime_factor_list_set_node<T>& node1) const {
-        return (node0.num == node1.num);
-    }
-};
-
 template<class T> struct prime_factor_data {
-    static boost::unordered_set<prime_factor_list_set_node<T>, prime_factor_list_set_node_hash<T>, prime_factor_list_set_node_equals<T>> factor_set;
-    static typename boost::unordered_set<prime_factor_list_set_node<T>, prime_factor_list_set_node_hash<T>, prime_factor_list_set_node_equals<T>>::iterator factor_iter;
+    static boost::unordered_map<T, prime_factor_list<T>> factor_map;
+    static typename boost::unordered_map<T, prime_factor_list<T>>::iterator factor_iter;
 };
 
-template<class T> boost::unordered_set<prime_factor_list_set_node<T>, prime_factor_list_set_node_hash<T>, prime_factor_list_set_node_equals<T>> prime_factor_data<T>::factor_set;
-template<class T> typename boost::unordered_set<prime_factor_list_set_node<T>, prime_factor_list_set_node_hash<T>, prime_factor_list_set_node_equals<T>>::iterator prime_factor_data<T>::factor_iter;
+template<class T> boost::unordered_map<T, prime_factor_list<T>> prime_factor_data<T>::factor_map = {{static_cast<T>(1), prime_factor_list<T>()}};
+template<class T> typename boost::unordered_map<T, prime_factor_list<T>>::iterator prime_factor_data<T>::factor_iter;
 
 template<class T, class P, bool CACHE> prime_factor_list<T>* factor(const T& num);
 template<class T, class P, bool CACHE> prime_factor_list<T>* factor_loop(const T& num, size_t prime_list_pos);
 
 // Well defined only for num > 1
-template<class T, class P, bool CACHE> prime_factor_list<T>* factor(const T& num) {
-    prime_factor_data<T>::factor_iter = prime_factor_data<T>::factor_set.find(prime_factor_list_set_node<T>(num));
-    if(prime_factor_data<T>::factor_iter != prime_factor_data<T>::factor_set.end()) {
-        return (*prime_factor_data<T>::factor_iter).pf_list_ptr.get();
+template<class T, class P, bool CACHE = true> prime_factor_list<T>* factor(const T& num) {
+    prime_factor_data<T>::factor_iter = prime_factor_data<T>::factor_map.find(num);
+    if(prime_factor_data<T>::factor_iter != prime_factor_data<T>::factor_map.end()) {
+        return &(prime_factor_data<T>::factor_iter->second);
     }
     if(num < 1) {
         throw "factor<T>: input less than 1";
@@ -95,9 +67,7 @@ template<class T, class P, bool CACHE> prime_factor_list<T>* factor(const T& num
 template<class T, class P, bool CACHE> prime_factor_list<T>* factor_loop(const T& num, size_t prime_list_pos) {
     prime_factor_list<T>* result;
     if(CACHE) {
-        std::unique_ptr<prime_factor_list<T>> factor_unique_ptr = std::make_unique<prime_factor_list<T>>();
-        result = factor_unique_ptr.get();
-        prime_factor_data<T>::factor_set.emplace(prime_factor_list_set_node<T>(num, &factor_unique_ptr));
+        result = &(((prime_factor_data<T>::factor_map.emplace(boost::unordered::piecewise_construct, boost::make_tuple(num), boost::make_tuple())).first)->second);
     } else {
         result = new prime_factor_list<T>();
     }
@@ -143,11 +113,11 @@ template<class T, class P, bool CACHE> prime_factor_list<T>* factor_loop(const T
         return result;
     }
     prime_factor_list<T>* num_div_list;
-    prime_factor_data<T>::factor_iter = prime_factor_data<T>::factor_set.find(prime_factor_list_set_node<T>(num_div));
-    if(prime_factor_data<T>::factor_iter == prime_factor_data<T>::factor_set.end()) {
+    prime_factor_data<T>::factor_iter = prime_factor_data<T>::factor_map.find(num_div);
+    if(prime_factor_data<T>::factor_iter == prime_factor_data<T>::factor_map.end()) {
         num_div_list = factor_loop<T, P, CACHE>(num_div, prime_list_pos + 1);
     } else {
-        num_div_list = (*prime_factor_data<T>::factor_iter).pf_list_ptr.get();
+        num_div_list = &(prime_factor_data<T>::factor_iter->second);
     }
     result->len = num_div_list->len + 1;
     result->primes = new T[result->len];
