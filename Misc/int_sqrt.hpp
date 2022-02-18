@@ -2,15 +2,7 @@
 #ifndef INT_SQRT_HPP
 #define INT_SQRT_HPP
 
-#include <algorithm>
-#include <cstdint>
-
 #include <boost/multiprecision/cpp_int.hpp>
-
-typedef std::int32_t int32_t;
-typedef std::uint32_t uint32_t;
-typedef std::int64_t int64_t;
-typedef std::uint64_t uint64_t;
 
 template<class T> T int_sqrt(const T& num) {
     return boost::multiprecision::sqrt(num);

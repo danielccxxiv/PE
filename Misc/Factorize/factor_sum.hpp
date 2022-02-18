@@ -2,8 +2,6 @@
 #ifndef FACTOR_SUM_HPP
 #define FACTOR_SUM_HPP
 
-#include <boost/unordered_map.hpp>
-
 #include "factorize.hpp"
 #include "../pow_int.hpp"
 
@@ -20,11 +18,11 @@ template<class T, bool CACHE = true> T factor_sum(const T& num, prime_factor_lis
     if(factor_sum_data<T>::factor_sum_iter != factor_sum_data<T>::factor_sum_map.end()) {
         return factor_sum_data<T>::factor_sum_iter->second;
     }
-    if(num < 1) {
+    if(num < static_cast<T>(1)) {
         throw "factor_sum<T>: num less than 1";
     }
-    T product = 1;
-    for(size_t i = 0; i < x->len; i++) {
+    T product = static_cast<T>(1);
+    for(unsigned int i = 0; i < x->len; i++) {
         product *= ((pow_int<T, int32_t>(x->primes[i], x->exp[i] + 1) - 1) / (x->primes[i] - 1));
     }
     if(CACHE) {

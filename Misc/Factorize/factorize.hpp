@@ -2,23 +2,11 @@
 #ifndef FACTORIZE_HPP
 #define FACTORIZE_HPP
 
-#include <cstdint>
-#include <memory>
-#include <stack>
-#include <vector>
-
 #include <boost/unordered_map.hpp>
 
 #include "../binary_search.hpp"
 #include "../int_sqrt.hpp"
-#include "../pow_int.hpp"
 #include "../Sequences/prime_sequence.hpp"
-
-typedef std::int32_t int32_t;
-typedef std::uint32_t uint32_t;
-typedef std::int64_t int64_t;
-typedef std::uint64_t uint64_t;
-typedef std::size_t size_t;
 
 template<class T> struct prime_factor_list {
 	T* primes;

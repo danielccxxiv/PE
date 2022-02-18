@@ -1,0 +1,6 @@
+
+env = Environment(CC = 'g++', CCFLAGS = ['-Wall', '-O0'])
+
+env.Object('factor_sum.cpp')
+env.Program(target = 'factor_sum', src = ['factor_sum.o'], LIBS = ['primesieve'], LIBPATH = [])
+

@@ -2,15 +2,8 @@
 #ifndef MILLER_RABIN_DET
 #define MILLER_RABIN_DET
 
-#include <cstdint>
-
 #include <boost/multiprecision/cpp_int.hpp>
 
-typedef std::int32_t int32_t;
-typedef std::uint32_t uint32_t;
-typedef std::int64_t int64_t;
-typedef std::uint64_t uint64_t;
-typedef boost::multiprecision::int128_t int128_t;
 typedef boost::multiprecision::uint128_t uint128_t;
 
 bool mr_det_32_detail(uint32_t num);

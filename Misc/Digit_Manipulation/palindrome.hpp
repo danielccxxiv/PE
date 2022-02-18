@@ -2,8 +2,6 @@
 #ifndef PALINDROME_HPP
 #define PALINDROME_HPP
 
-#include "../../Headers/std_integer_numeric_types.hpp"
-
 #include <list>
 
 template<class T> bool is_palindrome(const T* arr, size_t len) {

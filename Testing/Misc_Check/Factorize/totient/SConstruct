@@ -1,0 +1,6 @@
+
+env = Environment(CC = 'g++', CCFLAGS = ['-Wall', '-O0'])
+
+env.Object('totient.cpp')
+env.Program(target = 'totient', src = ['totient.o'], LIBS = ['primesieve'], LIBPATH = [])
+

@@ -1,0 +1,5 @@
+
+env = Environment(CC = 'g++', CCFLAGS = ['-Wall', '-O0'])
+
+env.Object('miller_rabin_det.cpp')
+

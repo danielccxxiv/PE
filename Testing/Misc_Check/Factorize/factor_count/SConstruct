@@ -1,0 +1,6 @@
+
+env = Environment(CC = 'g++', CCFLAGS = ['-Wall', '-O0'])
+
+env.Object('factor_count.cpp')
+env.Program(target = 'factor_count', src = ['factor_count.o'], LIBS = ['primesieve'], LIBPATH = [])
+

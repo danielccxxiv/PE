@@ -1,0 +1,6 @@
+
+env = Environment(CC = 'g++', CCFLAGS = ['-Wall', '-O0'])
+
+env.Object('prime_sequence.cpp')
+env.Program(target = 'prime_sequence', src = ['prime_sequence.o'], LIBS = ['primesieve'], LIBPATH = [])
+

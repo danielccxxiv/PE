@@ -2,13 +2,9 @@
 #ifndef MULT_GROUP_SIZE_HPP
 #define MULT_GROUP_SIZE_HPP
 
-#include <limits>
-
 #include <boost/unordered_map.hpp>
 
 #include "factorize.hpp"
-#include "totient.hpp"
-#include "../gcd.hpp"
 #include "../pow_int.hpp"
 
 template<class T> struct mult_group_size_data {
@@ -24,6 +20,7 @@ template<class T> typename boost::unordered_map<T, T>::iterator mult_group_size_
 template<class T> bool mult_group_size_loop(const T& num, T residue, prime_factor_list<T>* x, int32_t* arr, size_t level);
 
 // does not test if inputs are relatively prime
+// prime_factor_list input must be for totient(num)
 template<class T, bool CACHE = true> T mult_group_size(const T& num, const T& base, prime_factor_list<T>* x) {
     if(num < 2) {
         throw "mult_group_size<T>: num less than 2";
@@ -40,9 +37,6 @@ template<class T, bool CACHE = true> T mult_group_size(const T& num, const T& ba
         }
     } else if(CACHE) {
         mult_group_size_data<T>::mult_group_size_iter0 = mult_group_size_data<T>::mult_group_size_map.emplace(num, boost::unordered_map<T, T>()).first;
-    }
-    if(x == nullptr) {
-        x = factor<T, P, factor_CACHE>(totient<T, P, totient_CACHE, factor_CACHE>(num));
     }
     int32_t* arr = new int32_t[x->len];
     for(size_t i = 0; i < x->len; i++) {

@@ -4,8 +4,6 @@
 
 #include <cstddef>
 
-typedef std::size_t size_t;
-
 template<class T> void perm_iter_inc(T* arr, size_t len) {
 	size_t pos = len - 1;
     while((pos > 0) && (arr[pos - 1] >= arr[pos])) {

@@ -2,8 +2,6 @@
 #ifndef UNORDERED_DIGIT_HASH_HPP
 #define UNORDERED_DIGIT_HASH_HPP
 
-#include "../../Headers/std_integer_numeric_types.hpp"
-
 #include "../Sequences/prime_sequence.hpp"
 
 template<class T, class B, class R = T, class P = B> R unordered_digit_hash(T num, B base = 10) {

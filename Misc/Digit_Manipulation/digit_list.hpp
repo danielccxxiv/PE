@@ -2,8 +2,6 @@
 #ifndef DIGIT_LIST_HPP
 #define DIGIT_LIST_HPP
 
-#include "../../Headers/std_integer_numeric_types.hpp"
-
 #include <queue>
 
 // Well defined only for non-negative num and base > 1

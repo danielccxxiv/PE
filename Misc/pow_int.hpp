@@ -2,17 +2,8 @@
 #ifndef POW_INT_HPP
 #define POW_INT_HPP
 
-#include <cstdint>
-#include <cstdlib>
-#include <limits>
-#include <type_traits>
-
 #include <boost/multiprecision/cpp_int.hpp>
 
-typedef std::int32_t int32_t;
-typedef std::uint32_t uint32_t;
-typedef std::int64_t int64_t;
-typedef std::uint64_t uint64_t;
 typedef boost::multiprecision::uint128_t uint128_t;
 
 template<class B, class P> B pow_int(const B& b, const P& p) {

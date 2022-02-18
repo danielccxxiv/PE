@@ -2,14 +2,7 @@
 #ifndef DIVIDE_QR_HPP
 #define DIVIDE_QR_HPP
 
-#include <cstdlib>
-
 #include <boost/multiprecision/cpp_int.hpp>
-
-typedef std::int32_t int32_t;
-typedef std::uint32_t uint32_t;
-typedef std::int64_t int64_t;
-typedef std::uint64_t uint64_t;
 
 template<class T> inline void divide_qr(T& x, T& y, T& q, T& r) {
     boost::multiprecision::divide_qr(x, y, q, r);

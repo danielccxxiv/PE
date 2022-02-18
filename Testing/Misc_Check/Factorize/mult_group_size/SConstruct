@@ -1,0 +1,6 @@
+
+env = Environment(CC = 'g++', CCFLAGS = ['-Wall', '-O0'])
+
+env.Object('mult_group_size.cpp')
+env.Program(target = 'mult_group_size', src = ['mult_group_size.o'], LIBS = ['primesieve'], LIBPATH = [])
+

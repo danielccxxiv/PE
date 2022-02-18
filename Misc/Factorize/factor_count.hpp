@@ -2,8 +2,6 @@
 #ifndef FACTOR_COUNT_HPP
 #define FACTOR_COUNT_HPP
 
-#include <boost/unordered_map.hpp>
-
 #include "factorize.hpp"
 
 template<class T> struct factor_count_data {
@@ -19,12 +17,12 @@ template<class T, bool CACHE = true> T factor_count(const T& num, prime_factor_l
     if(factor_count_data<T>::factor_count_iter != factor_count_data<T>::factor_count_map.end()) {
         return factor_count_data<T>::factor_count_iter->second;
     }
-    if(num < 1) {
+    if(num < static_cast<T>(1)) {
         throw "factor_count<T>: num less than 1";
     }
-	T product = 1;
-	for(size_t i = 0; i < x->len; i++) {
-		product *= (x->exp[i] + 1);
+	T product = static_cast<T>(1);
+	for(unsigned int i = 0; i < x->len; i++) {
+		product *= static_cast<T>(x->exp[i] + 1);
 	}
     if(CACHE) {
         factor_count_data<T>::factor_count_map.emplace(num, product);

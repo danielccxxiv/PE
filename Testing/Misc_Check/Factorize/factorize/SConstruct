@@ -1,0 +1,6 @@
+
+env = Environment(CC = 'g++', CCFLAGS = ['-Wall', '-O0'])
+
+env.Object('factorize.cpp')
+env.Program(target = 'factorize', src = ['factorize.o'], LIBS = ['primesieve'], LIBPATH = [])
+

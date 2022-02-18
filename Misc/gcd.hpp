@@ -2,8 +2,6 @@
 #ifndef GCD_HPP
 #define GCD_HPP
 
-#include "../Headers/std_integer_numeric_types.hpp"
-
 template<class T> T gcd(const T& a, const T& b) {
     T a_cast = a;
     T b_cast = b;

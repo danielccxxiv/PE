@@ -1,0 +1,5 @@
+
+env = Environment(CC = 'g++', CCFLAGS = ['-Wall', '-O0'])
+
+env.Object('digit_list.cpp')
+

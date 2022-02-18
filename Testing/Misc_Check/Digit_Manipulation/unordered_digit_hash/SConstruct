@@ -1,0 +1,6 @@
+
+env = Environment(CC = 'g++', CCFLAGS = ['-Wall', '-O0'])
+
+env.Object('unordered_digit_hash.cpp')
+env.Program(target = 'unordered_digit_hash', src = ['unordered_digit_hash.o'], LIBS = ['primesieve'], LIBPATH = [])
+

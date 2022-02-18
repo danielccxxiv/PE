@@ -2,9 +2,7 @@
 #ifndef FLOAT_SQRT_HPP
 #define FLOAT_SQRT_HPP
 
-#include <algorithm>
-
-#include <boost/multiprecision/cpp_float.hpp>
+#include <boost/multiprecision/cpp_bin_float.hpp>
 
 template<class T> T float_sqrt(const T& num) {
     return boost::multiprecision::sqrt(num);
