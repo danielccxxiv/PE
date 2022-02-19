@@ -7,7 +7,7 @@
 
 #include <primesieve.hpp>
 
-#include "../../../Misc/pow_functions.hpp"
+#include "../../../Misc/pow_int.hpp"
 #include "../../../Misc/Digit_Manipulation/unordered_digit_hash.hpp"
 
 #endif

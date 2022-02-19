@@ -6,10 +6,10 @@
 #include <primesieve.hpp>
 
 template<class T> struct prime {
+    static primesieve::iterator iter;
     static std::vector<T> list;
 
     static void update(const unsigned int& pos) {
-        static primesieve::iterator iter;
         while(pos >= list.size()) {
             list.push_back(iter.next_prime());
         }
@@ -17,6 +17,7 @@ template<class T> struct prime {
     }
 };
 
+template<class T> primesieve::iterator prime<T>::iter;
 template<class T> std::vector<T> prime<T>::list;
 
 #endif

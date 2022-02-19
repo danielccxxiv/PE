@@ -5,7 +5,7 @@
 #include "../../../Headers/std_integer_numeric_types.hpp"
 #include <iostream>
 
-#include "../../../Misc/floor_sqrt.hpp"
+#include "../../../Misc/int_sqrt.hpp"
 
 // Value is: (sqrt(n) + k) / d
 // Proof that remainders will always be in this form is in:

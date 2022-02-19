@@ -8,7 +8,7 @@
 
 #include <algorithm>
 
-#include "../../../Misc/pow_functions.hpp"
+#include "../../../Misc/pow_int.hpp"
 #include "../../../Misc/Digit_Manipulation/digit_sum.hpp"
 
 #endif

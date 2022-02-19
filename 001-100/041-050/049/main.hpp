@@ -5,14 +5,12 @@
 #include "../../../Headers/std_integer_numeric_types.hpp"
 #include <iostream>
 
-typedef std::size_t size_t;
-
 #include <vector>
 
 #include <primesieve.hpp>
 
 #include "../../../Misc/binary_search.hpp"
-#include "../../../Misc/pow_functions.hpp"
+#include "../../../Misc/pow_int.hpp"
 #include "../../../Misc/Digit_Manipulation/unordered_digit_hash.hpp"
 
 #endif

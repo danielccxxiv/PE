@@ -7,7 +7,7 @@
 
 #include <vector>
 
-#include "../../../Misc/floor_sqrt.hpp"
+#include "../../../Misc/int_sqrt.hpp"
 
 int64_t pentagonal(int32_t n);
 bool is_pentagonal(int64_t num);

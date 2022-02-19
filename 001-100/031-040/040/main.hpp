@@ -5,7 +5,7 @@
 #include "../../../Headers/std_integer_numeric_types.hpp"
 #include <iostream>
 
-#include "../../../Misc/pow_functions.hpp"
+#include "../../../Misc/pow_int.hpp"
 
 int32_t digit_at(int32_t pos);
 

@@ -9,7 +9,7 @@
 
 #include <primesieve.hpp>
 
-#include "../../../Misc/pow_functions.hpp"
+#include "../../../Misc/pow_int.hpp"
 #include "../../../Misc/Digit_Manipulation/digit_count.hpp"
 
 #endif

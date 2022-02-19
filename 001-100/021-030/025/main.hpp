@@ -8,7 +8,7 @@
 
 #include <vector>
 
-#include "../../../Misc/pow_functions.hpp"
+#include "../../../Misc/pow_int.hpp"
 #include "../../../Misc/Sequences/fibonacci.hpp"
 
 #endif

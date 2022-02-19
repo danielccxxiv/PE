@@ -14,8 +14,9 @@ template<class T> T factorial(const unsigned int& n) {
     if(factorial_data<T>::factorial_vector.size() > n) {
         return factorial_data<T>::factorial_vector[n];
     }
+    size_t current_size = factorial_data<T>::factorial_vector.size();
     factorial_data<T>::factorial_vector.resize(n + 1);
-    for(unsigned int i = factorial_data<T>::factorial_vector.size(); i < (n + 1); i++) {
+    for(unsigned int i = current_size; i < (n + 1); i++) {
         factorial_data<T>::factorial_vector[i] = static_cast<T>(i) * factorial_data<T>::factorial_vector[i - 1];
     }
     return factorial_data<T>::factorial_vector[n];

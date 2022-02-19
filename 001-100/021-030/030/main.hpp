@@ -5,6 +5,6 @@
 #include "../../../Headers/std_integer_numeric_types.hpp"
 #include <iostream>
 
-#include "../../../Misc/pow_functions.hpp"
+#include "../../../Misc/pow_int.hpp"
 
 #endif

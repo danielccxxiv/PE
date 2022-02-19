@@ -6,8 +6,8 @@
 
 typedef boost::multiprecision::uint128_t uint128_t;
 
-bool mr_det_32_detail(uint32_t num);
-bool mr_det_64_detail(uint64_t num);
+bool mr_det_32(uint32_t num);
+bool mr_det_64(uint64_t num);
 
 template<class T> bool mr_det(const T& num) {
     throw "mr_det<T>(T num): unsupported type";
@@ -17,11 +17,11 @@ template<> bool mr_det<int32_t>(const int32_t& num) {
     if(num < 0) {
         throw "mr_det<int32_t>(int32_t num): negative input";
     }
-    return mr_det_32_detail(static_cast<uint32_t>(num));
+    return mr_det_32(static_cast<uint32_t>(num));
 }
 
 template<> bool mr_det<uint32_t>(const uint32_t& num) {
-    return mr_det_32_detail(num);
+    return mr_det_32(num);
 }
 
 template<> bool mr_det<int64_t>(const int64_t& num) {
@@ -30,18 +30,18 @@ template<> bool mr_det<int64_t>(const int64_t& num) {
         throw "mr_det<int64_t>(int64_t num): negative input";
     }
     if(num < int64_32_bit_bound) {
-        return mr_det_32_detail(static_cast<uint32_t>(num));
+        return mr_det_32(static_cast<uint32_t>(num));
     } else {
-        return mr_det_64_detail(static_cast<uint64_t>(num));
+        return mr_det_64(static_cast<uint64_t>(num));
     }
 }
 
 template<> bool mr_det<uint64_t>(const uint64_t& num) {
     static constexpr uint64_t uint64_32_bit_bound = static_cast<uint64_t>(1) << 32;
     if(num < uint64_32_bit_bound) {
-        return mr_det_32_detail(static_cast<uint32_t>(num));
+        return mr_det_32(static_cast<uint32_t>(num));
     } else {
-        return mr_det_64_detail(num);
+        return mr_det_64(num);
     }
 }
 

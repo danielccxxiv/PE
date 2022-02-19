@@ -12,7 +12,7 @@
 #include <boost/lexical_cast.hpp>
 
 #include "../../../Misc/Digit_Manipulation/digit_count.hpp"
-#include "../../../Misc/pow_functions.hpp"
+#include "../../../Misc/pow_int.hpp"
 
 static const size_t N = 100;
 

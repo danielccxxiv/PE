@@ -8,15 +8,15 @@ int main() {
     while(true) {
         n++;
         val = n * (4 * n - 2) + 1;
-        if(miller_rabin_det(val)) {
+        if(mr_det(val)) {
             prime_count++;
         }
         val = 4 * n * n + 1;
-        if(miller_rabin_det(val)) {
+        if(mr_det(val)) {
             prime_count++;
         }
         val = n * (4 * n + 2) + 1;
-        if(miller_rabin_det(val)) {
+        if(mr_det(val)) {
             prime_count++;
         }
         if((10 * prime_count) < (4 * n + 1)) {

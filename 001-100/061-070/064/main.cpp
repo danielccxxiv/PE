@@ -13,7 +13,7 @@ int main() {
 }
 
 int32_t cont_frac_period(int32_t n) {
-    alg_num base(n, -floor_sqrt(n), 1);
+    alg_num base(n, -int_sqrt(n), 1);
     if((base.k * base.k) == n) {
         return 0;
     }
@@ -29,7 +29,7 @@ int32_t cont_frac_period(int32_t n) {
 }
 
 int32_t alg_num_floor(alg_num num) {
-    return (floor_sqrt(num.n) + num.k) / num.d;
+    return (int_sqrt(num.n) + num.k) / num.d;
 }
 
 alg_num inverse(alg_num num) {

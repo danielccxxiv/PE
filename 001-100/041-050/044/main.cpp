@@ -41,7 +41,7 @@ int64_t pentagonal(int32_t n) {
 
 bool is_pentagonal(int64_t num) {
     int64_t tr_num = 24 * num + 1;
-    int64_t test_val = floor_sqrt<int64_t>(tr_num);
+    int64_t test_val = int_sqrt<int64_t>(tr_num);
     if(((test_val * test_val) != tr_num) || ((test_val % 6) != 5)) {
         return false;
     }

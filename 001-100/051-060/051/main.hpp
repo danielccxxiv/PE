@@ -8,7 +8,7 @@
 #include <boost/container/set.hpp>
 
 #include "../../../Misc/binary_search.hpp"
-#include "../../../Misc/pow_functions.hpp"
+#include "../../../Misc/pow_int.hpp"
 #include "../../../Misc/Sequences/prime_sequence.hpp"
 
 static boost::container::set<int32_t> wc_primes;

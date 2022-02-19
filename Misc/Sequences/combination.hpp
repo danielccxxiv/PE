@@ -35,10 +35,10 @@ template<class T> T combination(const unsigned int& n, const unsigned int& k) {
         } else {
             val = combination<T>(n - 1, 0);
         }
-        combination_data<T>::combination_vector.emplace_back(std::make_tuple((n / 2) + 1, static_cast<T>(0)));
-        combination_data<T>::combination_vector[0] = static_cast<T>(1);
-        combination_data<T>::combination_vector[1] = static_cast<T>(n);
-        combination_data<T>::combination_vector[k] = val;
+        combination_data<T>::combination_vector.push_back(std::vector<T>((n / 2) + 1, static_cast<T>(0)));
+        combination_data<T>::combination_vector[n][0] = static_cast<T>(1);
+        combination_data<T>::combination_vector[n][1] = static_cast<T>(n);
+        combination_data<T>::combination_vector[n][k] = val;
         return val;
     }
 }

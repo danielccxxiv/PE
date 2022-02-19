@@ -90,9 +90,9 @@ bool connected(int32_t i, int32_t j) {
     int32_t prime_i = prime<int32_t>::list[i];
     int32_t prime_j = prime<int32_t>::list[j];
     int64_t sum = prime_i * pow_int<int64_t, int32_t>(10, digit_count<int32_t, int32_t>(prime_j)) + prime_j;
-    if(!(miller_rabin_det(sum))) {
+    if(!(mr_det(sum))) {
         return false;
     }
     sum = prime_j * pow_int<int64_t, int32_t>(10, digit_count<int32_t, int32_t>(prime_i)) + prime_i;
-    return miller_rabin_det(sum);
+    return mr_det(sum);
 }

@@ -6,7 +6,7 @@
 #include "../../../Headers/boost_integer_numeric_types.hpp"
 #include <iostream>
 
-#include "../../../Misc/pow_functions.hpp"
+#include "../../../Misc/pow_int.hpp"
 #include "../../../Misc/Digit_Manipulation/digit_count.hpp"
 
 #endif

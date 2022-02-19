@@ -19,11 +19,12 @@ template<class T> T fibonacci(const int& n) {
             return -fibonacci<T>(-n);
         }
     }
-    if(fibonacci_data<T>::fibonacci_vector.size() > n) {
+    if(fibonacci_data<T>::fibonacci_vector.size() > static_cast<size_t>(n)) {
         return fibonacci_data<T>::fibonacci_vector[n];
     }
+    size_t current_size = fibonacci_data<T>::fibonacci_vector.size();
     fibonacci_data<T>::fibonacci_vector.resize(n + 1);
-    for(int i = fibonacci_data<T>::fibonacci_vector.size(); i < (n + 1); i++) {
+    for(int i = current_size; i < (n + 1); i++) {
         fibonacci_data<T>::fibonacci_vector[i] = fibonacci_data<T>::fibonacci_vector[i - 2] + fibonacci_data<T>::fibonacci_vector[i - 1];
     }
     return fibonacci_data<T>::fibonacci_vector[n];

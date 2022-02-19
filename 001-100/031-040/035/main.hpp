@@ -10,7 +10,7 @@
 #include <primesieve.hpp>
 
 #include "../../../Misc/binary_search.hpp"
-#include "../../../Misc/pow_functions.hpp"
+#include "../../../Misc/pow_int.hpp"
 #include "../../../Misc/Digit_Manipulation/digit_count.hpp"
 
 static int32_t limit = 1000000;

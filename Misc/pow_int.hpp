@@ -34,7 +34,7 @@ template<class B, class P, class C> inline B powm_detail(const B& b, P& p_cast, 
     static_assert(std::numeric_limits<C>::is_integer);
     static_assert(!(std::numeric_limits<C>::is_signed));
     C m_cast = static_cast<C>(m);
-    C b_cast = static_cast<C>(std::abs(b)) % m_cast;
+    C b_cast = static_cast<C>(b) % m_cast;
     C r = static_cast<C>(1);
     while(p_cast != static_cast<P>(0)) {
         while((p_cast & static_cast<P>(1)) == static_cast<P>(0)) {
@@ -44,7 +44,7 @@ template<class B, class P, class C> inline B powm_detail(const B& b, P& p_cast, 
         r = (r * b_cast) % m_cast;
         p_cast--;
     }
-    return r;
+    return static_cast<B>(r);
 }
 
 template<class B, class P> B powm(const B& b, const P& p, const B& m) {
@@ -72,27 +72,27 @@ template<class B, class P> B powm(const B& b, const P& p, const B& m) {
     P p_cast = p;
     if(B_is_int32) {
         if(m < int32_wide_check) {
-            return static_cast<int32_t>(powm_detail<int32_t, P, uint32_t>(b, p_cast, m));
+            return static_cast<int32_t>(powm_detail<int32_t, P, uint32_t>(std::abs(static_cast<int32_t>(b)), p_cast, static_cast<int32_t>(m)));
         } else {
-            return static_cast<int32_t>(powm_detail<int32_t, P, uint64_t>(b, p_cast, m));
+            return static_cast<int32_t>(powm_detail<int32_t, P, uint64_t>(std::abs(static_cast<int32_t>(b)), p_cast, static_cast<int32_t>(m)));
         }
     } else if(B_is_uint32) {
         if(m < uint32_wide_check) {
-            return static_cast<uint32_t>(powm_detail<uint32_t, P, uint32_t>(b, p_cast, m));
+            return static_cast<uint32_t>(powm_detail<uint32_t, P, uint32_t>(static_cast<uint32_t>(b), p_cast, static_cast<uint32_t>(m)));
         } else {
-            return static_cast<uint32_t>(powm_detail<uint32_t, P, uint64_t>(b, p_cast, m));
+            return static_cast<uint32_t>(powm_detail<uint32_t, P, uint64_t>(static_cast<uint32_t>(b), p_cast, static_cast<uint32_t>(m)));
         }
     } else if(B_is_int64) {
         if(m < int64_wide_check) {
-            return static_cast<int64_t>(powm_detail<int64_t, P, uint64_t>(b, p_cast, m));
+            return static_cast<int64_t>(powm_detail<int64_t, P, uint64_t>(std::abs(static_cast<int64_t>(b)), p_cast, static_cast<int64_t>(m)));
         } else {
-            return static_cast<int64_t>(powm_detail<int64_t, P, uint128_t>(b, p_cast, m));
+            return static_cast<int64_t>(powm_detail<int64_t, P, uint128_t>(std::abs(static_cast<int64_t>(b)), p_cast, static_cast<int64_t>(m)));
         }
     } else if(B_is_uint64) {
         if(m < uint64_wide_check) {
-            return static_cast<uint64_t>(powm_detail<uint64_t, P, uint64_t>(b, p_cast, m));
+            return static_cast<uint64_t>(powm_detail<uint64_t, P, uint64_t>(static_cast<uint64_t>(b), p_cast, static_cast<uint64_t>(m)));
         } else {
-            return static_cast<uint64_t>(powm_detail<uint64_t, P, uint128_t>(b, p_cast, m));
+            return static_cast<uint64_t>(powm_detail<uint64_t, P, uint128_t>(static_cast<uint64_t>(b), p_cast, static_cast<uint64_t>(m)));
         }
     } else {
         throw "powm<B, P>(B b, P p, B m): unexpected error";
