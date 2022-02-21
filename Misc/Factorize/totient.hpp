@@ -2,8 +2,6 @@
 #ifndef TOTIENT_HPP
 #define TOTIENT_HPP
 
-#include <boost/unordered_map.hpp>
-
 #include "factorize.hpp"
 #include "../pow_int.hpp"
 

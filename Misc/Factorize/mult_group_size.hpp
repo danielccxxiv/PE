@@ -2,10 +2,7 @@
 #ifndef MULT_GROUP_SIZE_HPP
 #define MULT_GROUP_SIZE_HPP
 
-#include <boost/unordered_map.hpp>
-
-#include "factorize.hpp"
-#include "../pow_int.hpp"
+#include "totient.hpp"
 
 template<class T> struct mult_group_size_data {
     static boost::unordered_map<T, boost::unordered_map<T, T>> mult_group_size_map;
