@@ -1,0 +1,22 @@
+Install Scons:
+	sudo apt-get install scons
+	
+	Use scons in any folder with SConstruct
+
+Install boost:
+	sudo apt-get install libboost-dev
+
+Install Eigen:
+	sudo apt-get install libeigen3-dev
+
+Install primesieve:
+	sudo apt-get install primesieve libprimesieve-dev primesieve-doc
+	
+	From: https://github.com/kimwalisch/primesieve
+
+Install primecount:
+	sudo apt-get install primecount libprimecount-dev primecount-doc
+	
+	From: https://github.com/kimwalisch/primecount
+
+

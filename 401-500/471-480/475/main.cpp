@@ -18,11 +18,11 @@ int main(int argc, char** argv) {
 	for (i = 1; i < (N / S1); i++) {
 		Comb[S2 * i] = 1;
 		for (j = 1; j < S2; j++) {
-			Comb[S2 * i + j] = Comb[S2 * (i - 1) + (j - 1)] 
+			Comb[S2 * i + j] = Comb[S2 * (i - 1) + (j - 1)]
 				+ Comb[S2 * (i - 1) + j];
 		}
 	}
-	
+
 //	g = new group();
 	for(i = 0; i < (N / S2); i++){
 		for(it = s.begin(); it != s.end(); it++) {

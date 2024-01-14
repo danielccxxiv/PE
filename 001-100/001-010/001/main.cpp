@@ -1,6 +1,11 @@
 
 #include "main.hpp"
 
+/*
+This program uses the formula for the sum of the first n natural numbers
+applied to 3 and 5 as well as discounting the double counted multiples of 15.
+*/
+
 int main() {
 	int32_t sum3 = (limit - 1) / 3;
 	sum3 = 3 * sum3 * (sum3 + 1) / 2;

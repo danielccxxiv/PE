@@ -1,6 +1,12 @@
 
 #include "main.hpp"
 
+/*
+This program uses a palindrome checker and loops the multiplicands top down. The
+loop stops if the larger multiplicand can not be multiplied to produce a larger
+possible palindrome product.
+*/
+
 int main() {
 	int32_t current_pal = 0;
     int32_t product = 0;
@@ -13,7 +19,7 @@ int main() {
 			if(product < current_pal) {
 				break;
 			}
-			if(is_palindrome_num<int32_t, int32_t>(product)) {
+			if(product == reverse_digits<int32_t, int32_t>(product)) {
 				current_pal = product;
 			}
 		}

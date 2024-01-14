@@ -1,8 +1,8 @@
 
 #include "main.hpp"
 
-int main(int argc, char** argv) {
-	priority_queue<layer*, compare<layer_c> > h;
+int main() {
+	boost::heap::priority_queue<layer*, boost::heap::compare<layer_compare> > h;
 	layer* cur;
 	h.push(new layer(1, 1, 1, 0));
 	layer** next;
@@ -32,7 +32,7 @@ int main(int argc, char** argv) {
 	return 0;
 }
 
-layer** next_layers(const layer& l, int* len) {
+vector<layer> next_layers(const layer& l, int* len) {
 	layer** next;
 	int a = l.a;
 	int b = l.b;

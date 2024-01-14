@@ -2,11 +2,10 @@
 #ifndef MAIN_HPP
 #define MAIN_HPP
 
+#include "../../../Headers/std_integer_numeric_types.hpp"
 #include <iostream>
 
 #include <boost/heap/priority_queue.hpp>
-
-using namespace boost::heap;
 
 typedef struct layer {
 	int a, b, c, k, n;
@@ -25,7 +24,7 @@ typedef struct layer {
 	}
 } layer;
 
-typedef struct layer_c {
+typedef struct layer_compare {
 	bool operator()(const layer* q1, const layer* q2) const {
 		if(q1->n < q2->n) {
 			return false;
@@ -59,7 +58,7 @@ typedef struct layer_c {
 		}
 		return false;
 	}
-} layer_c;
+} layer_compare;
 
 layer** next_layers(const layer& l, int* len);
 

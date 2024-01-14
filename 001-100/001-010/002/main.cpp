@@ -1,6 +1,11 @@
 
 #include "main.hpp"
 
+/*
+This program loops through numbers created by a custom fibonacci function and
+adds all of the even ones up to the limit.
+*/
+
 int main() {
 	int32_t sum = 0;
 	int32_t n = 0;

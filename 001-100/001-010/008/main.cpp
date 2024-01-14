@@ -1,6 +1,11 @@
 
 #include "main.hpp"
 
+/*
+First program to require the reading of a file
+Execution of program after reading data is simple
+*/
+
 int main() {
 	int32_t* digits;
 	read_file("data.txt", &digits);
@@ -11,6 +16,22 @@ int main() {
 	std::cout << max_product << std::endl;
 	return 0;
 }
+
+/*
+Uses boost::filesystem::ifstream to read file
+
+Syntax:
+
+#include <boost/filesystem/fstream.hpp>
+
+boost::filesystem::ifstream stream;
+stream.open([std::string] filename);
+
+getline(stream, [std::string] raw_data);
+// repeat getline until raw_data returns EOF
+
+stream.close();
+*/
 
 void read_file(std::string filename, int32_t** param) {
     size_t cnt = 0;
